@@ -25,7 +25,7 @@ const TimelineItem = ({ date, title, subtitle, description, isLast = false, isRi
     </div>
     
     <div className="w-full max-w-[700px]">
-      {/* Empty container for alignment on the other side */}
+
     </div>
   </div>
 );

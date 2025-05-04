@@ -36,26 +36,26 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <Header />
-      
-      <main className="mx-auto px-6 md:px-12 lg:px-24 max-w-7xl">
-        <Hero />
-        <div className="section-spacing" id="projects">
-          <Projects />
-        </div>
-        <div className="section-spacing" id="timeline">
-          <Timeline />
-        </div>
-        <div className="section-spacing" id="skills">
-          <Skills />
-        </div>
-        <div className="section-spacing" id="certifications">
-          <Certifications />
-        </div>
-        <Footer />
-      </main>
-    </div>
+      <div className="min-h-screen">
+        <Header />
+
+        <main className="mx-auto px-6 md:px-12 lg:px-24 max-w-7xl">
+          <Hero />
+          <div className="section-spacing" id="projects">
+            <Projects />
+          </div>
+          <div className="section-spacing" id="certifications">
+            <Certifications />
+          </div>
+          <div className="section-spacing" id="skills">
+            <Skills />
+          </div>
+          <div className="section-spacing" id="timeline">
+            <Timeline />
+          </div>
+          <Footer />
+        </main>
+      </div>
   );
 };
 
