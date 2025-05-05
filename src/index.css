@@ -75,7 +75,7 @@
   }
   
   body:not(.light) {
-    background: linear-gradient(to bottom, #000000, #1A1F2C);
+    background: linear-gradient(to bottom, #000000, #000000);
   }
 }
 
