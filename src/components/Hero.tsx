@@ -14,7 +14,7 @@ const Hero = () => {
           </h1>
           
           <p className="text-lg text-muted-foreground max-w-2xl mt-6">
-            GenAI & MERN Stack Developer building full-stack apps with AI integration and scalable web architecture.
+            Building full-stack apps with AI integration and scalable web architecture.
           </p>
           
           <div className="flex flex-wrap gap-3 mt-8">
