@@ -12,7 +12,7 @@ type TimelineItemProps = {
 
 const TimelineItem = ({ date, title, subtitle, description, isLast = false, isRight = false }: TimelineItemProps) => (
   <div className={`flex ${isRight ? 'flex-row-reverse' : 'flex-row'} animate-fade-in`}>
-    <div className={`pb-12 ${isLast ? '' : 'border-l border-transparent'} ${isRight ? 'text-right' : 'text-left'} w-full max-w-[700px]`}>
+    <div className={`pb-12 ${isLast ? '' : 'border-l border-transparent'} ${isRight ? 'text-left' : 'text-right'} w-full max-w-[700px]`}>
       <span className="block text-sm text-muted-foreground mb-1">{date}</span>
       <h3 className="text-lg font-medium">{title}</h3>
       <p className="text-muted-foreground">{subtitle}</p>
