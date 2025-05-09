@@ -20,8 +20,8 @@ const TimelineItem = ({ date, title, subtitle, description, isLast = false, isRi
     </div>
     
     <div className="flex flex-col items-center mx-6">
-      <div className="h-3 w-3 bg-accent rounded-full animate-pulse-subtle"></div>
-      {!isLast && <div className="h-full w-px bg-border mt-1 bg-gradient-to-b from-accent to-border"></div>}
+      <div className="h-3 w-3 bg-blue-400 rounded-full animate-pulse-subtle"></div>
+      {!isLast && <div className="h-full w-px bg-border mt-1 bg-gradient-to-b from-blue-400 to-border"></div>}
     </div>
     
     <div className="w-full max-w-[700px]">
