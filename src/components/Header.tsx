@@ -88,7 +88,7 @@ const Header = () => {
               >
                 {item.label}
                 {activeSection === item.id && (
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent rounded-full animate-slide-side" />
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400 rounded-full animate-none" />
                 )}
               </button>
             </li>
@@ -108,7 +108,7 @@ const Header = () => {
           
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline" size="sm" className="rounded-full">
+              <Button variant="outline" size="sm" className="rounded-full hover:bg-blue-400">
                 <Mail className="h-4 w-4 mr-2" />
                 Contact
               </Button>
@@ -117,7 +117,7 @@ const Header = () => {
               <div className="flex flex-col gap-2">
                 <a 
                   href="mailto:gouravkrishna23@gmail.com"
-                  className="flex items-center gap-2 hover:text-accent transition-colors"
+                  className="flex items-center gap-2 hover:text-blue-400 transition-colors"
                 >
                   <Mail className="h-4 w-4" />
                   <span>Email</span>
@@ -126,7 +126,7 @@ const Header = () => {
                   href="https://linkedin.com/in/gouravk2304" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-accent transition-colors"
+                  className="flex items-center gap-2 hover:text-blue-400 transition-colors"
                 >
                   <Linkedin className="h-4 w-4" />
                   <span>LinkedIn</span>
@@ -135,7 +135,7 @@ const Header = () => {
                   href="https://github.com/tamatar-23" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-accent transition-colors"
+                  className="flex items-center gap-2 hover:text-blue-400 transition-colors"
                 >
                   <Github className="h-4 w-4" />
                   <span>GitHub</span>
@@ -144,7 +144,7 @@ const Header = () => {
                   href="https://instagram.com/gouravk2304" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-accent transition-colors"
+                  className="flex items-center gap-2 hover:text-blue-400 transition-colors"
                 >
                   <Instagram className="h-4 w-4" />
                   <span>Instagram</span>
