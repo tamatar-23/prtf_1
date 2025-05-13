@@ -70,31 +70,30 @@ const Projects = () => {
       techIcons: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+      ]
+    },
+    {
+      title: "Portfolio Website",
+      description: "A sleek and responsive portfolio website built with React and Tailwind CSS, featuring smooth animations for an engaging user experience.",
+      demoUrl: "https://gouravk2304.vecel.app",
+      githubUrl: "https://github.com/tamatar-23/prtf_1",
+      techIcons: [
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
       ]
     },
     {
-      title: "Transport Accessibility Tracker",
-      description: "An application to track and record the quality of public transport accessibility for people with disabilities, enabling community-driven reporting and ratings.",
-      demoUrl: "https://accessibility-tracker.web.app",
-      githubUrl: "https://github.com/tamatar-23/accessibility-tracker",
+      title: "Financial Wise",
+      description: "A modern financial advice website built with React and Tailwind CSS, using the Gemini API to provide smart, real-time insights.",
+      demoUrl: "",
+      githubUrl: "https://github.com/tamatar-23/FiWi-1",
       techIcons: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-      ]
-    },
-    {
-      title: "AI Content Generator",
-      description: "A powerful content generation tool powered by OpenAI's API that creates high-quality text content based on user prompts and parameters.",
-      demoUrl: "https://ai-content-gen.herokuapp.com",
-      githubUrl: "https://github.com/tamatar-23/ai-content-gen",
-      techIcons: [
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg",
-        "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
       ]
     }
   ];

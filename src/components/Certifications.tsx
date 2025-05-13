@@ -58,6 +58,14 @@ const Certifications = () => {
       tags: ["Data Structures", "Algorithms"]
     },
     {
+      title:"React - The Complete Guide",
+      issuer: "Udemy",
+      date: "May 2025",
+      description: "Comprehensive course on building modern reactive web applications with React and state management with Redux.",
+      certUrl: "https://udemy-certificate.s3.amazonaws.com/pdf/UC-b7ae8e33-c0c2-4630-b67d-cc8488998475.pdf",
+      tags: ["React", "Tailwind"]
+    },
+    {
       title: "AWS Solutions Architecture",
       issuer: "Amazon Web Services (Forage)",
       date: "Apr 2025",
@@ -69,17 +77,9 @@ const Certifications = () => {
       title: "Deloitte Data Analysis",
       issuer: "Deloitte (Forage)",
       date: "Apr 2025",
-      description: "Comprehensive course on building modern reactive web applications with React and state management with Redux.",
+      description: "Completed a Deloitte job simulation focused on data analysis and forensic technology using Excel and Tableau to build dashboards and draw insights.",
       certUrl: "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_RJDBXerf3WcTL6Xbt_1746039911080_completion_certificate.pdf",
       tags: ["Data Analysis", "Excel"]
-    },
-    {
-      title: "TensorFlow Developer Certificate",
-      issuer: "Google",
-      date: "May 2023",
-      description: "Certification validating practical skills in building neural networks and ML models with TensorFlow.",
-      certUrl: "https://example.com/certification4",
-      tags: ["TensorFlow", "AI", "Deep Learning"]
     },
   ];
 
