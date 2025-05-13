@@ -87,7 +87,7 @@ const Projects = () => {
     {
       title: "Financial Wise",
       description: "A modern financial advice website built with React and Tailwind CSS, using the Gemini API to provide smart, real-time insights.",
-      demoUrl: "",
+      demoUrl: "https://fiwi1.vercel.app/",
       githubUrl: "https://github.com/tamatar-23/FiWi-1",
       techIcons: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
