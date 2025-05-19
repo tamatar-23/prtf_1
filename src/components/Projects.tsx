@@ -66,7 +66,7 @@ const Projects = () => {
       title: "type.tmtr",
       description: "A MonkeyType replica built with React and Firebase, providing an intuitive typing test experience with real-time stats, user accounts, and customizable themes.",
       demoUrl: "https://type-tmtr.web.app",
-      githubUrl: "https://github.com/tamatar-23/type.tmtr",
+      githubUrl: "https://github.com/tamatar-23/tmtr1",
       techIcons: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
