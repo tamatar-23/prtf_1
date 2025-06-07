@@ -63,24 +63,13 @@ const ProjectCard = ({
 const Projects = () => {
   const projects = [
     {
-      title: "type.tmtr",
+      title: "Type.TMTR",
       description: "A MonkeyType replica built with React and Firebase, providing an intuitive typing test experience with real-time stats, user accounts, and customizable themes.",
       demoUrl: "https://type-tmtr.web.app",
       githubUrl: "https://github.com/tamatar-23/tmtr1",
       techIcons: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-      ]
-    },
-    {
-      title: "Portfolio Website",
-      description: "A sleek and responsive portfolio website built with React and Tailwind CSS, featuring smooth animations for an engaging user experience.",
-      demoUrl: "https://gouravk2304.vecel.app",
-      githubUrl: "https://github.com/tamatar-23/prtf_1",
-      techIcons: [
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
       ]
     },
@@ -93,6 +82,17 @@ const Projects = () => {
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
         "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+      ]
+    },
+    {
+      title: "Portfolio Website",
+      description: "A sleek and responsive portfolio website built with React and Tailwind CSS, featuring smooth animations for an engaging user experience.",
+      demoUrl: "https://gouravk2304.vecel.app",
+      githubUrl: "https://github.com/tamatar-23/prtf_1",
+      techIcons: [
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
       ]
     }
