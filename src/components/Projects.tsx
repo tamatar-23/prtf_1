@@ -69,7 +69,7 @@ const Projects = () => {
       githubUrl: "https://github.com/tamatar-23/tmtr1",
       techIcons: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+        "https://www.vectorlogo.zone/logos/supabase/supabase-icon.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
       ]
     },
