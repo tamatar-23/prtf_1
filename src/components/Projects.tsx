@@ -63,6 +63,19 @@ const ProjectCard = ({
 const Projects = () => {
   const projects = [
     {
+      title: "GitConsistent",
+      description: "A hyperminimal, modern web app for habit tracking, featuring GitHub-style progress visualization and AI-driven Coach, Insights, and Journal tools.",
+      demoUrl: "https://gitconsistent.vercel.app/",
+      githubUrl: "https://github.com/tamatar-23/gitconsistent",
+      techIcons: [
+        "https://www.vectorlogo.zone/logos/nextjs/nextjs-icon.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+        "https://upload.wikimedia.org/wikipedia/commons/8/8f/Google-gemini-icon.svg",
+        "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg",
+      ]
+    },
+    {
       title: "Type.TMTR",
       description: "A MonkeyType replica built with React and Firebase, providing an intuitive typing test experience with real-time stats, user accounts, and customizable themes.",
       demoUrl: "https://typetmtr.vercel.app",
@@ -82,7 +95,7 @@ const Projects = () => {
       techIcons: [
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-        "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg",
+        "https://upload.wikimedia.org/wikipedia/commons/8/8f/Google-gemini-icon.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
       ]
     },
