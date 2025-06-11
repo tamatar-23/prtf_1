@@ -72,7 +72,7 @@ const Hero = () => {
               size="lg" 
               className="rounded-full bg-gradient-to-r from-blue-500 to-blue-300 text-white hover:opacity-90"
             >
-              <a href="https://drive.google.com/file/d/18SnMRB8dwKIsSOod_XlXWREBcnCdW6mP/view?usp=sharing" download>
+              <a href="https://drive.google.com/file/d/1H7YZSDgqefc35ludzJsE7SSYhFad6_Vx/view?usp=sharing" download>
                 <Download className="mr-2 h-5 w-5" />
                 Resume
               </a>
