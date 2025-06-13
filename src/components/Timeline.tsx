@@ -36,16 +36,9 @@ const Timeline = () => {
       date: "April 2025",
       title: "Cybersecurity Intern",
       subtitle: "@PinnacleLabs",
-      description: "Developed a comprehensive password analyzer tool to evaluate password strength against common vulnerabilities. Created encryption solutions for sensitive text and image data using advanced cryptographic algorithms. Built a keylogger for security testing that monitored system activity while maintaining user privacy.",
-      isRight: false
-    },
-    {
-      date: "May 2025",
-      title: "Machine Learning Intern",
-      subtitle: "@CodeAlpha",
-      description: "Created a music recommendation system that analyzed user listening patterns to suggest personalized playlists. Implemented an image recognition project that accurately identified and categorized objects in photographs with high precision.",
+      description: "Made Image and Text encryption software, and a Password Analyzer software using Python.",
       isLast: true,
-      isRight: true
+      isRight: false
     }
   ];
 
