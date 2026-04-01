@@ -2,13 +2,7 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { motion } from 'framer-motion';
 
 type CertificationCardProps = {
   title: string;
@@ -28,7 +22,7 @@ const CertificationCard = ({
   tags 
 }: CertificationCardProps) => (
   <Card 
-    className="bg-secondary/30 rounded-md p-6 flex flex-col h-[320px] card-hover animate-fade-in cursor-pointer"
+    className="bg-card border border-border/50 p-6 flex flex-col h-full min-h-[320px] shadow-soft hover:-translate-y-1 hover:shadow-soft-lg transition-all duration-300 cursor-pointer"
     onClick={() => window.open(certUrl, '_blank')}
   >
     <h3 className="text-xl font-bold mb-2">{title}</h3>
@@ -41,7 +35,7 @@ const CertificationCard = ({
     
     <div className="flex flex-wrap gap-2 mt-auto">
       {tags.map((tag, index) => (
-        <Badge key={index} variant="secondary" className="text-xs">{tag}</Badge>
+        <Badge key={index} variant="secondary" className="text-xs rounded-full border border-border/50 bg-secondary text-secondary-foreground">{tag}</Badge>
       ))}
     </div>
   </Card>
@@ -58,7 +52,7 @@ const Certifications = () => {
       tags: ["Data Structures", "Algorithms"]
     },
     {
-      title:"React - The Complete Guide",
+      title: "React - The Complete Guide",
       issuer: "Udemy",
       date: "May 2025",
       description: "Comprehensive course on building modern reactive web applications with React and state management with Redux.",
@@ -66,49 +60,50 @@ const Certifications = () => {
       tags: ["React", "Tailwind"]
     },
     {
-      title: "AWS Solutions Architecture",
-      issuer: "Amazon Web Services (Forage)",
-      date: "Apr 2025",
-      description: "Professional certification validating expertise in designing distributed systems on AWS.",
-      certUrl: "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/pmnMSL4QiQ9JCgE3W/kkE9HyeNcw6rwCRGw_pmnMSL4QiQ9JCgE3W_RJDBXerf3WcTL6Xbt_1745865695064_completion_certificate.pdf",
-      tags: ["AWS", "Cloud", "Architecture"]
-    },
-    {
-      title: "Deloitte Data Analysis",
-      issuer: "Deloitte (Forage)",
-      date: "Apr 2025",
-      description: "Completed a Deloitte job simulation focused on data analysis and forensic technology using Excel and Tableau to build dashboards and draw insights.",
-      certUrl: "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_RJDBXerf3WcTL6Xbt_1746039911080_completion_certificate.pdf",
-      tags: ["Data Analysis", "Excel"]
-    },
+      title: "Building LLM Applications",
+      issuer: "Nvidia Deep Learning Institute",
+      date: "2026",
+      description: "Explored techniques for building and scaling Large Language Model applications, prompt engineering, and RAG architectures.",
+      certUrl: "#",
+      tags: ["LLM", "AI", "RAG"]
+    }
   ];
 
   return (
-    <section id="certifications" className="py-24 px-4 md:px-8 lg:px-16 animate-fade-in">
+    <section id="certifications" className="py-24 px-4 md:px-8 lg:px-16 overflow-hidden">
       <div className="max-w-screen-xl mx-auto">
-        <h2 className="text-3xl font-bold mb-12">Certifications</h2>
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-3xl font-bold mb-12 uppercase tracking-tight"
+        >
+          Certifications
+        </motion.h2>
         
-        <Carousel className="w-full max-w-screen-xl">
-          <CarouselContent>
-            {certifications.map((cert, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                <div className="p-1">
-                  <CertificationCard 
-                    key={index}
-                    title={cert.title}
-                    issuer={cert.issuer}
-                    date={cert.date}
-                    description={cert.description}
-                    certUrl={cert.certUrl}
-                    tags={cert.tags}
-                  />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {certifications.map((cert, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="flex"
+            >
+              <div className="w-full">
+                <CertificationCard 
+                  title={cert.title}
+                  issuer={cert.issuer}
+                  date={cert.date}
+                  description={cert.description}
+                  certUrl={cert.certUrl}
+                  tags={cert.tags}
+                />
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
