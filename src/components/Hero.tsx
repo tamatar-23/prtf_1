@@ -89,7 +89,7 @@ const Hero = () => {
             
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button asChild variant="default" size="lg" className="shadow-soft-lg hover:shadow-xl transition-shadow bg-primary text-primary-foreground">
-                <a href="https://docs.google.com/document/d/1yeMFeDlzgZm13vyZV5HkIthjpopFpnqamqq3C6gpiPE/edit?usp=drive_link" download>
+                <a href="https://drive.google.com/file/d/1V4yb7H8gqx6bPa79DRa02SxpG-_fS7kA/view?usp=drive_link" download>
                   <Download className="mr-2 h-5 w-5" /> Resume
                 </a>
               </Button>
