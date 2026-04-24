@@ -1,160 +1,237 @@
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Github, ExternalLink, X } from 'lucide-react';
+import { projects } from '@/lib/data';
+import { SectionLabel } from './ui/SectionLabel';
+import {
+  Python,
+  TypeScript,
+  JavaScript,
+  React as ReactIcon,
+  NextJs,
+  TailwindCSS,
+  Firebase,
+  PyTorch,
+  ViteJS,
+} from 'developer-icons';
+import { BrainCircuit, Terminal } from 'lucide-react';
 
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Github, ExternalLink } from 'lucide-react';
-import { motion } from 'framer-motion';
+gsap.registerPlugin(ScrollTrigger);
 
-const ProjectCard = ({
-  title,
-  description,
-  techIcons,
-  demoUrl,
-  githubUrl
-}) => (
-  <Card
-    className="bg-card border border-border/50 p-6 flex flex-col h-full min-h-[400px] shadow-soft hover:-translate-y-1 hover:shadow-soft-lg transition-all duration-300 relative overflow-hidden group"
-  >
-    <div className="z-10 h-full flex flex-col">
-      <h3 className="text-xl font-bold mb-3">{title}</h3>
-      <p className="text-muted-foreground mb-6 flex-grow">{description}</p>
+/** Map common project tags to developer-icons */
+const tagIconMap: Record<string, React.ReactNode> = {
+  'Python': <Python size={16} />,
+  'TypeScript': <TypeScript size={16} />,
+  'JavaScript': <JavaScript size={16} />,
+  'React': <ReactIcon size={16} />,
+  'Next.js': <NextJs size={16} />,
+  'Tailwind CSS': <TailwindCSS size={16} />,
+  'Firebase': <Firebase size={16} />,
+  'PyTorch': <PyTorch size={16} />,
+  'LangGraph': <BrainCircuit size={16} />,
+  'GSAP': <Terminal size={16} />,
+  'Vite': <ViteJS size={16} />,
+};
 
-      <div className="flex gap-3 mb-4">
-        {techIcons.map((icon, index) => (
-          <img key={index} src={icon} alt="" className="h-6 w-6" />
-        ))}
-      </div>
+const getTagIcon = (tag: string): React.ReactNode | null => {
+  return tagIconMap[tag] || null;
+};
 
-      <div className="flex gap-3 mt-auto justify-center">
-        {demoUrl && (
-          <Button
-            asChild
-            variant="outline"
-            size="sm"
-            className="border border-border/50 bg-background hover:bg-secondary hover:-translate-y-0.5 transition-all duration-200 flex-1 shadow-sm"
-          >
-            <a href={demoUrl} target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="mr-2 h-4 w-4" />
-              Live Demo
-            </a>
-          </Button>
-        )}
+export const Projects = () => {
+  const containerRef = useRef<HTMLElement>(null);
+  const expandedRef = useRef<HTMLDivElement>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
-        <Button
-          asChild
-          variant="outline"
-          size="sm"
-          className="border border-border/50 bg-background hover:bg-secondary hover:-translate-y-0.5 transition-all duration-200 flex-1 shadow-sm"
-        >
-          <a href={githubUrl} target="_blank" rel="noopener noreferrer">
-            <Github className="mr-2 h-4 w-4" />
-            Source Code
-          </a>
-        </Button>
-      </div>
-    </div>
-  </Card>
-);
+  const selectedProject = projects.find(p => p.id === selectedId) || null;
 
-const Projects = () => {
-  const projects = [
-    {
-      title: "Time Series LLM for Financial Data",
-      description: "A specialized time-series LLM architecture repurposing GPT-2/LLaMA for high-frequency volatility forecasting. Achieved 0.9991 R² score using FFT filtering and RevIN. Optimized with PyTorch DDP and AMP.",
-      githubUrl: "https://github.com/tamatar-23/t1me_50",
-      techIcons: [
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg",
-      ]
-    },
-    {
-      title: "GitConsistent",
-      description: "A hyperminimal, modern web app for habit tracking, featuring GitHub-style progress visualization and AI-driven Coach, Insights, and Journal tools.",
-      demoUrl: "https://gitconsistent.vercel.app/",
-      githubUrl: "https://github.com/tamatar-23/gitconsistent",
-      techIcons: [
-        "https://www.vectorlogo.zone/logos/nextjs/nextjs-icon.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-        "https://upload.wikimedia.org/wikipedia/commons/8/8f/Google-gemini-icon.svg",
-        "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg",
-      ]
-    },
-    {
-      title: "Type.TMTR",
-      description: "A MonkeyType replica built with React and Firebase, providing an intuitive typing test experience with real-time stats, user accounts, and customizable themes.",
-      demoUrl: "https://typetmtr.vercel.app",
-      githubUrl: "https://github.com/tamatar-23/type_tmtr",
-      techIcons: [
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-        "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg",
-      ]
-    },
-    {
-      title: "Financial Wise",
-      description: "A modern financial advice website built with React and Tailwind CSS, using the Gemini API to provide smart, real-time insights.",
-      demoUrl: "https://fiwi1.vercel.app/",
-      githubUrl: "https://github.com/tamatar-23/FiWi-1",
-      techIcons: [
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-        "https://upload.wikimedia.org/wikipedia/commons/8/8f/Google-gemini-icon.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-      ]
-    },
-    {
-      title: "Portfolio Website",
-      description: "A sleek and responsive portfolio website built with React and Tailwind CSS, featuring smooth animations for an engaging user experience.",
-      demoUrl: "https://gouravk2304.vecel.app",
-      githubUrl: "https://github.com/tamatar-23/prtf_1",
-      techIcons: [
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-      ]
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const projectCards = gsap.utils.toArray('.project-card');
+
+      gsap.fromTo(projectCards,
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 80%',
+          }
+        }
+      );
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
+
+  // Animate expanded card
+  useLayoutEffect(() => {
+    if (!expandedRef.current) return;
+    if (selectedId) {
+      gsap.fromTo(expandedRef.current,
+        { opacity: 0, y: 30, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'power3.out' }
+      );
     }
-  ];
+  }, [selectedId]);
+
+  const handleCardClick = (id: string) => {
+    setSelectedId(prev => prev === id ? null : id);
+  };
+
+  const closeExpanded = () => {
+    if (!expandedRef.current) {
+      setSelectedId(null);
+      return;
+    }
+    gsap.to(expandedRef.current, {
+      opacity: 0, y: 20, scale: 0.96, duration: 0.3, ease: 'power2.in',
+      onComplete: () => setSelectedId(null)
+    });
+  };
 
   return (
-    <section id="projects" className="py-24 px-4 md:px-8 lg:px-16 overflow-hidden">
-      <div className="max-w-screen-xl mx-auto">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-3xl font-bold mb-12 uppercase tracking-tight"
-        >
-          Projects
-        </motion.h2>
+    <section id="projects" ref={containerRef} className="py-24 px-6 text-text relative z-10">
+      <div className="container mx-auto max-w-7xl">
+        <SectionLabel number="01" text="Selected Works" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex"
+        {/* Equal-size grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project) => (
+            <button
+              key={project.id}
+              onClick={() => handleCardClick(project.id)}
+              className={`project-card relative rounded-2xl overflow-hidden group bg-surface backdrop-blur-sm border will-change-transform aspect-[4/3] text-left cursor-pointer transition-all duration-300 ${
+                selectedId === project.id
+                  ? 'border-accent-2 ring-2 ring-accent-2/20'
+                  : 'border-border hover:border-accent-2/40'
+              }`}
             >
-              <div className="w-full">
-                <ProjectCard
-                  title={project.title}
-                  description={project.description}
-                  techIcons={project.techIcons}
-                  demoUrl={project.demoUrl}
-                  githubUrl={project.githubUrl}
-                />
+              {/* Background abstract gradient */}
+              <div
+                className="absolute inset-0 opacity-20 dark:opacity-30 transition-opacity duration-500 group-hover:opacity-40"
+                style={{
+                  background: `radial-gradient(circle at 50% 50%, ${project.accent} 0%, transparent 70%)`,
+                }}
+              />
+
+              {/* Content Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 z-10 flex flex-col justify-end">
+                <h3 className="text-xl md:text-2xl font-semibold text-text tracking-tight">{project.title}</h3>
+                <p className="text-text-muted text-sm uppercase tracking-wider mt-1 font-medium">{project.subtitle}</p>
               </div>
-            </motion.div>
+
+              {/* Link buttons — top right, visible on hover */}
+              <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                {project.repoUrl && (
+                  <a
+                    href={project.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="p-2 rounded-full bg-bg/70 backdrop-blur-sm text-text hover:bg-text hover:text-bg transition-colors"
+                    aria-label="GitHub Repository"
+                  >
+                    <Github size={16} />
+                  </a>
+                )}
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="p-2 rounded-full bg-bg/70 backdrop-blur-sm text-text hover:bg-text hover:text-bg transition-colors"
+                    aria-label="Live Demo"
+                  >
+                    <ExternalLink size={16} />
+                  </a>
+                )}
+              </div>
+            </button>
           ))}
         </div>
+
+        {/* Expanded project card */}
+        {selectedProject && (
+          <div
+            ref={expandedRef}
+            className="mt-8 rounded-2xl border border-accent-2/30 bg-surface backdrop-blur-md overflow-hidden"
+          >
+            <div className="flex flex-col md:flex-row">
+              {/* Left — gradient visual */}
+              <div
+                className="relative w-full md:w-2/5 min-h-[200px] md:min-h-[300px]"
+                style={{
+                  background: `radial-gradient(circle at 40% 50%, ${selectedProject.accent} 0%, transparent 70%), var(--color-bg-elevated)`,
+                }}
+              >
+                <div className="absolute bottom-6 left-6">
+                  <h3 className="text-2xl md:text-3xl font-bold text-text">{selectedProject.title}</h3>
+                  <p className="text-text-muted text-sm uppercase tracking-wider mt-1 font-medium">{selectedProject.subtitle}</p>
+                </div>
+              </div>
+
+              {/* Right — info panel */}
+              <div className="flex-1 p-6 md:p-8 flex flex-col gap-5">
+                {/* Close button */}
+                <div className="flex justify-end">
+                  <button
+                    onClick={closeExpanded}
+                    className="p-2 rounded-full bg-surface border border-border text-text-muted hover:text-text hover:bg-border transition-colors"
+                    aria-label="Close project details"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+
+                {/* Description */}
+                <p className="text-text-muted text-sm leading-relaxed">{selectedProject.description}</p>
+
+                {/* Tech stack with icons */}
+                <div className="flex flex-wrap gap-2">
+                  {selectedProject.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-bg-elevated border border-border text-text-muted font-medium"
+                    >
+                      {getTagIcon(tag)}
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Links */}
+                <div className="flex items-center gap-3 mt-auto pt-4">
+                  {selectedProject.repoUrl && (
+                    <a
+                      href={selectedProject.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-medium text-text border border-border rounded-full px-4 py-2 hover:bg-text hover:text-bg transition-colors"
+                    >
+                      <Github size={14} /> GitHub
+                    </a>
+                  )}
+                  {selectedProject.liveUrl && (
+                    <a
+                      href={selectedProject.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-medium text-text border border-border rounded-full px-4 py-2 hover:bg-text hover:text-bg transition-colors"
+                    >
+                      <ExternalLink size={14} /> Live Demo
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
 };
-
-export default Projects;

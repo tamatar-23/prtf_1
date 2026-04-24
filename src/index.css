@@ -1,163 +1,72 @@
+@import '@fontsource/plus-jakarta-sans/300.css';
+@import '@fontsource/plus-jakarta-sans/400.css';
+@import '@fontsource/plus-jakarta-sans/500.css';
+@import '@fontsource/plus-jakarta-sans/600.css';
+@import '@fontsource/plus-jakarta-sans/700.css';
+@import '@fontsource/plus-jakarta-sans/800.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 4%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 4%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 78%;
-    --accent: 0 0% 12%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 12%;
-    --input: 0 0% 12%;
-    --ring: 240 4.9% 83.9%;
-    --radius: 0.25rem;
-    --sidebar-background: 240 10% 3.9%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 240 4.9% 83.9%;
-  }
-
-  .light {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
-  }
-
-  * {
-    @apply border-border selection:bg-white/10 selection:text-white;
-  }
-
-  body {
-    @apply bg-background text-foreground antialiased;
-    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
-  }
-
-  html {
-    @apply scroll-smooth;
-  }
-
-  body.light {
-    background: #fafafa;
-  }
-
-  body:not(.light) {
-    background: hsl(var(--background));
-  }
+:root {
+  --color-bg: #F8F9FC;
+  --color-bg-warm: #EEF1F8;
+  --color-bg-elevated: #FFFFFF;
+  --color-text: #0A0E27;
+  --color-text-muted: #6B7280;
+  --color-border: rgba(10, 14, 39, 0.08);
+  --color-surface: rgba(255, 255, 255, 0.6);
+  --color-accent-1: #FF9FFC;
+  --color-accent-2: #330fd1;
+  --color-accent-3: #B497CF;
 }
 
-@layer utilities {
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 to-zinc-500 dark:from-white dark:to-zinc-200;
-  }
-
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card rounded-2xl border border-border/50;
-  }
-
-  .section-spacing {
-    @apply py-24;
-  }
+.dark {
+  --color-bg: #05070F;
+  --color-bg-warm: #0A0E27;
+  --color-bg-elevated: #11152E;
+  --color-text: #F8F9FC;
+  --color-text-muted: #8B92A8;
+  --color-border: rgba(248, 249, 252, 0.08);
+  --color-surface: rgba(255, 255, 255, 0.03);
+  --color-accent-1: #FF9FFC;
+  --color-accent-2: #5533e8;
+  --color-accent-3: #B497CF;
 }
 
-#root {
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
+html {
+  scroll-behavior: smooth;
 }
 
-main {
-  @apply container mx-auto max-w-screen-2xl;
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+::selection {
+  background-color: var(--color-accent-2);
+  color: white;
 }
 
-@keyframes slideInFromBottom {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+/* View Transitions for Theme Toggle */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
-
-@keyframes slideLeftRight {
-  from {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+::view-transition-old(root) {
+  z-index: 1;
 }
-
-.animate-fade-in {
-  animation: fadeInUp 0.6s ease-out forwards;
+::view-transition-new(root) {
+  z-index: 9999;
 }
-
-.animate-slide-up {
-  animation: slideInFromBottom 0.3s ease-out forwards;
+.dark::view-transition-old(root) {
+  z-index: 9999;
 }
-
-.animate-slide-side {
-  animation: slideLeftRight 0.4s ease-out forwards;
-}
-
-.delay-100 {
-  animation-delay: 0.1s;
-}
-
-.delay-200 {
-  animation-delay: 0.2s;
-}
-
-.delay-300 {
-  animation-delay: 0.3s;
+.dark::view-transition-new(root) {
+  z-index: 1;
 }

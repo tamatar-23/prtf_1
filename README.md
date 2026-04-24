@@ -1,87 +1,80 @@
-# Personal Portfolio Website
+# Portfolio — Gourav Krishna Mishra
 
-A modern, responsive portfolio website showcasing my skills and projects as a GenAI & MERN Stack Developer.
+A premium, dark-mode-first developer portfolio built with React, TypeScript, GSAP, and a custom design system.
 
 ## Overview
 
-This portfolio website serves as a professional showcase of my work, skills, and experience in full-stack development with AI integration. The site features a clean, minimalist design with dark mode support and responsive layout.
+This portfolio showcases my work as a Full Stack AI Developer, featuring animated section reveals, a radial theme transition, a staggered navigation menu, and a grainient shader background. All content — projects, skills, certifications, and timeline — is driven from a single `src/lib/data.ts` file for easy updates.
 
 ## Features
 
-- **Responsive Design**: Looks great on all devices from mobile to desktop
-- **Dark/Light Mode Toggle**: User preference for viewing experience
-- **Multiple Sections**:
-    - Home: Introduction and brief overview
-    - Projects: Showcase of my development work
-    - Certifications: Professional credentials and qualifications
-    - Tech Stack: Technologies I work with
-    - Timeline: Professional and educational journey
-    - Contact: Easy ways to get in touch
-- **Social Links**: Quick access to LinkedIn, GitHub, Email, and Instagram
-- **Downloadable Resume**: Easy access to my professional resume
+- Radial clip-path view transition animation for the dark/light mode toggle
+- Staggered navigation menu with GSAP-powered entrance animations
+- Equal-size project grid with click-to-expand wide cards showing description, tech stack with developer-icons, and links
+- Tech stack section with branded SVG icons from developer-icons and click-to-reveal definitions
+- Alternating left/right timeline layout with scroll-triggered slide-in animations
+- Custom grainient WebGL shader background that adapts to the active theme
+- Magnetic resume button in the hero section
+- Custom dot cursor on desktop
+- Fully responsive layout
 
-## Technology Stack
+## Tech Stack
 
-This project was built using:
+- React — component-based UI
+- TypeScript — static typing throughout
+- Vite — development server and build tool
+- Tailwind CSS — utility-first styling with a custom design token system
+- GSAP — scroll-triggered and entrance animations
+- developer-icons — branded SVG icons for tech stack and project tags
+- Plus Jakarta Sans — primary typeface via Fontsource
 
-- [React](https://reactjs.org/) - Front-end UI library
-- [Vite](https://vitejs.dev/) - Build tool and development server
-- [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+## Project Structure
+
+```
+src/
+  components/
+    Hero.tsx           — landing section with bio, social links, and resume button
+    Projects.tsx       — equal-size project grid with expandable detail cards
+    Skills.tsx         — tech stack grid with developer-icons and click definitions
+    Certifications.tsx — certification list with hover animations
+    Timeline.tsx       — alternating left/right journey timeline
+    Footer.tsx         — minimal footer with scroll-to-top
+    ui/
+      StaggeredMenu.tsx  — animated navigation menu with social links and resume
+      Grainient.tsx      — WebGL grain shader background
+      MagneticButton.tsx — magnetic hover effect button wrapper
+      SectionLabel.tsx   — section number + label component
+  lib/
+    data.ts            — all site content: personal info, projects, skills, certifications, timeline
+  hooks/
+    use-theme.tsx      — theme context with view transition animation
+  pages/
+    Index.tsx          — root page, assembles all sections
+```
 
 ## Getting Started
 
-### Prerequisites
+Prerequisites: Node.js 18 or higher, npm.
 
-- Node.js (version 16 or higher)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository
 ```bash
-git clone https://github.com/tamatar-23/prtf_1/
+git clone https://github.com/tamatar-23/prtf_1
 cd prtf_1
-```
-
-2. Install dependencies
-```bash
 npm install
-# or
-yarn install
-```
-
-3. Start the development server
-```bash
 npm run dev
-# or
-yarn dev
 ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+The dev server runs at `http://localhost:8080` by default.
 
 ## Customization
 
-Feel free to fork this repository and customize it for your own portfolio:
+All personal content is centralized in `src/lib/data.ts`. Update the `personal`, `projects`, `skills`, `certifications`, and `timeline` exports to make the portfolio your own.
 
-1. Update the personal information in `src/data/` directory
-2. Replace project images in the `public/projects/` directory
-3. Modify theme colors in the `tailwind.config.js` file
-4. Add your own sections or modify existing ones
+Theme colors are defined as CSS custom properties in `src/index.css` under `:root` (light) and `.dark` (dark mode).
 
-## Building for Production
+## Build
 
 ```bash
 npm run build
-# or
-yarn build
 ```
 
-The build output will be in the `dist` directory, ready for deployment.
-
-## Deployment
-
-This site can be easily deployed to platforms like:
-- Vercel
-- Netlify
-- GitHub Pages
+Output goes to the `dist/` directory, ready for deployment on Vercel, Netlify, or any static host.

@@ -1,112 +1,69 @@
+import React, { useLayoutEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ExternalLink } from 'lucide-react';
+import { certifications } from '@/lib/data';
+import { SectionLabel } from './ui/SectionLabel';
 
-import React from 'react';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { motion } from 'framer-motion';
+gsap.registerPlugin(ScrollTrigger);
 
-type CertificationCardProps = {
-  title: string;
-  issuer: string;
-  date: string;
-  description: string;
-  certUrl: string;
-  tags: string[];
-};
+export const Certifications = () => {
+  const containerRef = useRef<HTMLElement>(null);
 
-const CertificationCard = ({ 
-  title, 
-  issuer, 
-  date, 
-  description, 
-  certUrl, 
-  tags 
-}: CertificationCardProps) => (
-  <Card 
-    className="bg-card border border-border/50 p-6 flex flex-col h-full min-h-[320px] shadow-soft hover:-translate-y-1 hover:shadow-soft-lg transition-all duration-300 cursor-pointer"
-    onClick={() => window.open(certUrl, '_blank')}
-  >
-    <h3 className="text-xl font-bold mb-2">{title}</h3>
-    <div className="flex items-center justify-between mb-4">
-      <span className="text-sm text-muted-foreground">{issuer}</span>
-      <span className="text-xs text-muted-foreground">{date}</span>
-    </div>
-    
-    <p className="text-muted-foreground mb-6 flex-grow">{description}</p>
-    
-    <div className="flex flex-wrap gap-2 mt-auto">
-      {tags.map((tag, index) => (
-        <Badge key={index} variant="secondary" className="text-xs rounded-full border border-border/50 bg-secondary text-secondary-foreground">{tag}</Badge>
-      ))}
-    </div>
-  </Card>
-);
-
-const Certifications = () => {
-  const certifications = [
-    {
-      title: "Problem Solving (Intermediate + Basic)",
-      issuer: "HackerRank",
-      date: "Apr 2025",
-      description: "Completed coding assessments focused on algorithms and logic-based problem solving.",
-      certUrl: "https://www.hackerrank.com/certificates/71af2c748d62",
-      tags: ["Data Structures", "Algorithms"]
-    },
-    {
-      title: "React - The Complete Guide",
-      issuer: "Udemy",
-      date: "May 2025",
-      description: "Comprehensive course on building modern reactive web applications with React and state management with Redux.",
-      certUrl: "https://udemy-certificate.s3.amazonaws.com/pdf/UC-b7ae8e33-c0c2-4630-b67d-cc8488998475.pdf",
-      tags: ["React", "Tailwind"]
-    },
-    {
-      title: "Building LLM Applications",
-      issuer: "Nvidia Deep Learning Institute",
-      date: "2026",
-      description: "Explored techniques for building and scaling Large Language Model applications, prompt engineering, and RAG architectures.",
-      certUrl: "#",
-      tags: ["LLM", "AI", "RAG"]
-    }
-  ];
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const certRows = gsap.utils.toArray('.cert-row');
+      
+      gsap.fromTo(certRows, 
+        { x: -30, opacity: 0 },
+        { 
+          x: 0, 
+          opacity: 1, 
+          duration: 0.6, 
+          stagger: 0.1, 
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 80%',
+          }
+        }
+      );
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="certifications" className="py-24 px-4 md:px-8 lg:px-16 overflow-hidden">
-      <div className="max-w-screen-xl mx-auto">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-3xl font-bold mb-12 uppercase tracking-tight"
-        >
-          Certifications
-        </motion.h2>
+    <section id="certifications" ref={containerRef} className="py-24 px-6 text-text relative z-10">
+      <div className="container mx-auto max-w-4xl">
+        <SectionLabel number="03" text="Certifications" />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {certifications.map((cert, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex"
+        <div className="flex flex-col border-t border-border mt-8">
+          {certifications.map((cert, i) => (
+            <a 
+              key={i} 
+              href={cert.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="cert-row group flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-border transition-transform duration-300 hover:translate-x-2"
             >
-              <div className="w-full">
-                <CertificationCard 
-                  title={cert.title}
-                  issuer={cert.issuer}
-                  date={cert.date}
-                  description={cert.description}
-                  certUrl={cert.certUrl}
-                  tags={cert.tags}
-                />
+              <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
+                <h4 className="text-lg font-medium text-text transition-colors duration-300 group-hover:text-accent-2">
+                  {cert.name}
+                </h4>
+                <span className="text-sm text-text-muted mt-1 sm:mt-0">
+                  {cert.issuer}
+                </span>
               </div>
-            </motion.div>
+              <div className="flex items-center gap-4 mt-4 sm:mt-0">
+                <span className="text-sm text-text-muted font-mono">
+                  {cert.year}
+                </span>
+                <ExternalLink size={16} className="text-accent-2 opacity-0 -translate-x-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
+              </div>
+            </a>
           ))}
         </div>
       </div>
     </section>
   );
 };
-
-export default Certifications;

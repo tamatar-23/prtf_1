@@ -1,74 +1,158 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Brain, Layout, Server, Code2, Wrench, Cpu } from 'lucide-react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { skills, skillDefinitions } from '@/lib/data';
+import { SectionLabel } from './ui/SectionLabel';
+import {
+  PyTorch,
+  HuggingFace,
+  Python,
+  TypeScript,
+  JavaScript,
+  CPlusPlus,
+  NextJs,
+  React as ReactIcon,
+  TailwindCSS,
+  NodeJs,
+  Firebase,
+  PostgreSQL,
+  MongoDB,
+  Docker,
+  Kubernetes,
+  AWS,
+  GoogleCloud,
+  Git,
+  Java,
+  Lightroom,
+} from 'developer-icons';
+import { Terminal } from 'lucide-react';
 
-type SkillSectionProps = {
-  title: string;
-  icon: React.ReactNode;
-  skills: string[];
-  delay: number;
+gsap.registerPlugin(ScrollTrigger);
+
+/** Map skill names to their developer-icons component */
+const iconMap: Record<string, React.ReactNode> = {
+  'PyTorch': <PyTorch size={28} />,
+  'HuggingFace': <HuggingFace size={28} />,
+  'Java': <Java size={28} />,
+  'Lightroom': <Lightroom size={28} />,
+  'Python': <Python size={28} />,
+  'TypeScript': <TypeScript size={28} />,
+  'JavaScript': <JavaScript size={28} />,
+  'C++': <CPlusPlus size={28} />,
+  'Next.js': <NextJs size={28} />,
+  'React': <ReactIcon size={28} />,
+  'Tailwind CSS': <TailwindCSS size={28} />,
+  'Node.js': <NodeJs size={28} />,
+  'Firebase': <Firebase size={28} />,
+  'PostgreSQL': <PostgreSQL size={28} />,
+  'MongoDB': <MongoDB size={28} />,
+  'Docker': <Docker size={28} />,
+  'Kubernetes': <Kubernetes size={28} />,
+  'AWS': <AWS size={28} />,
+  'GCP': <GoogleCloud size={28} />,
+  'Git': <Git size={28} />,
 };
 
-const SkillSection = ({ title, icon, skills, delay }: SkillSectionProps) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5, delay }}
-    className={`border border-border/50 bg-card shadow-soft hover:-translate-y-1 hover:shadow-soft-lg transition-all duration-300`}
-  >
-    <div className="p-6">
-      <h3 className="text-xl font-bold mb-4 pb-2 flex items-center border-b border-border/50">
-        {icon}
-        {title}
-      </h3>
-      <div className="flex flex-wrap gap-2 mt-2">
-        {skills.map((skill, index) => (
-          <span key={index} className="px-3 py-1 bg-secondary text-secondary-foreground text-sm font-semibold transition-colors hover:bg-primary hover:text-primary-foreground">
-            {skill}
-          </span>
-        ))}
-      </div>
-    </div>
-  </motion.div>
-);
+const getIcon = (name: string): React.ReactNode => {
+  return iconMap[name] || <Terminal size={28} />;
+};
 
-const Skills = () => {
-  const skillCategories = [
-    { title: "Core Competencies", icon: <Cpu className="w-5 h-5 mr-2" />, skills: ["Agentic Workflows", "LLM Orchestration", "Full Stack Architecture"] },
-    { title: "Languages", icon: <Code2 className="w-5 h-5 mr-2" />, skills: ["JavaScript", "TypeScript", "Python", "Java", "C++"] },
-    { title: "Frontend", icon: <Layout className="w-5 h-5 mr-2" />, skills: ["React.js", "Next.js", "HTML", "CSS", "Tailwind CSS"] },
-    { title: "Backend & DBs", icon: <Server className="w-5 h-5 mr-2" />, skills: ["Node.js", "MongoDB", "Firebase", "PostgreSQL", "Supabase", "REST APIs"] },
-    { title: "AI / ML", icon: <Brain className="w-5 h-5 mr-2" />, skills: ["HuggingFace", "Pandas", "NumPy", "LangChain", "n8n"] },
-    { title: "DevOps & Tools", icon: <Wrench className="w-5 h-5 mr-2" />, skills: ["Docker", "Kubernetes", "Git", "GitHub", "AWS", "GCP", "Vercel"] },
-  ];
+export const Skills = () => {
+  const containerRef = useRef<HTMLElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const skillCards = gsap.utils.toArray('.skill-card');
+
+      gsap.fromTo(skillCards,
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.05,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 80%',
+          }
+        }
+      );
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
+
+  // Animate tooltip in/out
+  useLayoutEffect(() => {
+    if (!tooltipRef.current) return;
+    if (selectedSkill) {
+      gsap.fromTo(tooltipRef.current,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.4, ease: 'power3.out' }
+      );
+    } else {
+      gsap.to(tooltipRef.current, { y: 20, opacity: 0, duration: 0.25, ease: 'power2.in' });
+    }
+  }, [selectedSkill]);
+
+  const handleSkillClick = (skill: string) => {
+    setSelectedSkill(prev => prev === skill ? null : skill);
+  };
 
   return (
-    <section id="skills" className="py-24 px-4 md:px-8 lg:px-16 overflow-hidden">
-      <div className="max-w-screen-xl mx-auto">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-3xl font-bold mb-12 uppercase tracking-tight"
-        >
-          Technical Skills
-        </motion.h2>
+    <section id="skills" ref={containerRef} className="py-24 px-6 text-text relative z-10">
+      <div className="container mx-auto max-w-5xl">
+        <SectionLabel number="02" text="Tech Stack" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {skillCategories.map((cat, index) => (
-            <SkillSection
-              key={index}
-              title={cat.title}
-              icon={cat.icon}
-              skills={cat.skills}
-              delay={index * 0.1}
-            />
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {skills.map((skill) => (
+            <button
+              key={skill}
+              onClick={() => handleSkillClick(skill)}
+              className={`skill-card rounded-xl border p-6 bg-surface backdrop-blur-sm hover:border-accent-2 hover:text-accent-2 transition-all flex flex-col items-center justify-center text-center gap-4 group cursor-pointer ${
+                selectedSkill === skill
+                  ? 'border-accent-2 text-accent-2 ring-1 ring-accent-2/30'
+                  : 'border-border'
+              }`}
+            >
+              <div className={`transition-colors duration-300 ${
+                selectedSkill === skill ? 'text-accent-2' : 'text-text-muted group-hover:text-accent-2'
+              }`}>
+                {getIcon(skill)}
+              </div>
+              <span className={`font-medium text-sm transition-colors duration-300 ${
+                selectedSkill === skill ? 'text-accent-2' : 'text-text group-hover:text-accent-2'
+              }`}>
+                {skill}
+              </span>
+            </button>
           ))}
+        </div>
+
+        {/* Skill Definition Tooltip */}
+        <div
+          ref={tooltipRef}
+          className={`mt-8 rounded-xl border border-accent-2/30 bg-surface backdrop-blur-md p-6 flex items-center gap-5 ${
+            selectedSkill ? 'pointer-events-auto' : 'pointer-events-none opacity-0'
+          }`}
+        >
+          {selectedSkill && (
+            <>
+              <div className="shrink-0 text-accent-2">
+                {getIcon(selectedSkill)}
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-text font-semibold text-base">{selectedSkill}</span>
+                <span className="text-text-muted text-sm leading-relaxed">
+                  {skillDefinitions[selectedSkill] || 'A modern developer tool.'}
+                </span>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>
   );
 };
-
-export default Skills;
