@@ -34,7 +34,7 @@ export const projects = [
       'ChromaDB retrieval over 12-topic DSA knowledge base',
       '33 deterministic unit tests with zero API calls',
     ],
-    repoUrl: 'https://github.com/tamatar-23/agentic-rag',
+    repoUrl: 'https://github.com/tamatar-23/agent1',
     liveUrl: null,
     accent: '#330fd1',
   },
@@ -66,7 +66,7 @@ export const projects = [
     ],
     repoUrl: 'https://github.com/tamatar-23/gitconsistent',
     liveUrl: 'https://gitconsistent.vercel.app/',
-    accent: '#B497CF',
+    accent: '#00E676',
   },
   {
     id: 'type_tmtr',
@@ -81,7 +81,7 @@ export const projects = [
     ],
     repoUrl: 'https://github.com/tamatar-23/type_tmtr',
     liveUrl: 'https://typetmtr.vercel.app/',
-    accent: '#FF5C5C',
+    accent: '#eb92a6c0',
   },
   {
     id: 'mre',
@@ -96,7 +96,7 @@ export const projects = [
     ],
     repoUrl: 'https://github.com/tamatar-23/MRE',
     liveUrl: null,
-    accent: '#00E676',
+    accent: '#B497CF',
   },
   {
     id: 'prtf_1',
@@ -110,7 +110,7 @@ export const projects = [
       'Developer-icons integration for premium skill cards',
     ],
     repoUrl: 'https://github.com/tamatar-23/prtf_1',
-    liveUrl: null,
+    liveUrl: 'https://gouravk2304.vercel.app',
     accent: '#5533e8',
   },
 ];
