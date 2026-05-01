@@ -7,7 +7,7 @@ export const personal = {
   email: 'gouravkrishna23@gmail.com',
   phone: '+91 7606992021',
   location: 'India',
-  resumeUrl: 'https://drive.google.com/file/d/1ObgYrEmDwIITehlg71RLnuizg73dQuG4/view?usp=sharing',
+  resumeUrl: 'https://drive.google.com/file/d/1ZTJVq2pIUVy59HU1Anf1CKqEHeZPzDTL/view?usp=sharing',
   github: 'https://github.com/tamatar-23',
   linkedin: 'https://linkedin.com/in/gouravk2304',
   instagram: 'https://instagram.com/gouravk2304',
