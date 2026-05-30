@@ -129,77 +129,84 @@ export const projects = [
 ];
 
 export const skills = [
+  "Python",
   "PyTorch",
   "HuggingFace",
-  "Java",
-  "Lightroom",
-  "Python",
   "TypeScript",
   "JavaScript",
-  "C++",
   "Next.js",
   "React",
-  "Tailwind CSS",
   "Node.js",
-  "Firebase",
+  "Tailwind CSS",
   "PostgreSQL",
   "MongoDB",
+  "Redis",
+  "Firebase",
   "Docker",
   "Kubernetes",
   "AWS",
   "GCP",
   "Git",
+  "C++",
+  "Java",
+  "Lightroom",
 ];
 
 /** One-line definitions for each skill — shown on click in the Skills section */
 export const skillDefinitions: Record<string, string> = {
-  PyTorch:
-    "Deep learning framework for building and training neural networks with dynamic computation graphs.",
-  HuggingFace:
-    "Open-source platform providing pre-trained transformer models and NLP tools.",
-  Java: "Versatile, object-oriented programming language used across enterprise, Android, and backend systems.",
-  Lightroom:
-    "Professional photo editing and color grading tool from Adobe's Creative Cloud suite.",
   Python:
-    "High-level general-purpose language dominating AI/ML, data science, and backend development.",
+    "High-level programming language used for machine learning models, automation scripts, API layers, and data analysis.",
+  PyTorch:
+    "Deep learning framework used for building neural networks, time-series forecasting, and model training pipelines.",
+  HuggingFace:
+    "Platform and toolkit for training, evaluating, and deploying open-weight transformer models and model context protocols.",
   TypeScript:
-    "Typed superset of JavaScript enabling safer, more scalable frontend and backend codebases.",
+    "Strongly typed programming language built on JavaScript that ensures type safety and prevents runtime errors.",
   JavaScript:
-    "The language of the web — powering interactive experiences across browsers and servers.",
-  "C++":
-    "High-performance systems language used in competitive programming and low-level computing.",
+    "Core scripting language for creating dynamic user interactions, DOM manipulations, and asynchronous network queries.",
   "Next.js":
-    "React meta-framework with SSR, API routes, and file-based routing for production web apps.",
+    "React framework enabling server-side rendering, static site generation, and optimized full-stack routing.",
   React:
-    "Component-based UI library for building fast, declarative single-page applications.",
-  "Tailwind CSS":
-    "Utility-first CSS framework for rapidly building custom, responsive designs.",
+    "Component-based library for building responsive user interfaces with optimized state updates and virtual DOM rendering.",
   "Node.js":
-    "Server-side JavaScript runtime built on V8 for scalable backend services.",
-  Firebase:
-    "Google's BaaS platform providing auth, real-time database, hosting, and cloud functions.",
+    "V8-powered asynchronous JavaScript runtime for building high-concurrency API servers and background worker services.",
+  "Tailwind CSS":
+    "Utility-first styling framework enabling rapid design composition through semantic CSS design tokens.",
   PostgreSQL:
-    "Advanced open-source relational database known for extensibility and SQL compliance.",
+    "Advanced open-source relational database supporting high-performance SQL queries, indexing, and complex schemas.",
   MongoDB:
-    "Document-oriented NoSQL database designed for flexible, schema-less data storage.",
+    "Document-based NoSQL database optimized for high-scalability JSON storage and flexible document schemas.",
+  Redis:
+    "In-memory data structure store used as a high-speed database cache, message broker, and queue runner.",
+  Firebase:
+    "Backend-as-a-Service platform providing real-time databases, authentication, and secure cloud serverless execution.",
   Docker:
-    "Container platform for packaging and deploying applications in isolated, reproducible environments.",
+    "Containerization platform to package applications with all dependencies into reproducible, portable images.",
   Kubernetes:
-    "Container orchestration system for automating deployment, scaling, and management of apps.",
-  AWS: "Amazon's cloud platform offering compute, storage, AI/ML, and 200+ managed services.",
-  GCP: "Google Cloud Platform providing scalable infrastructure, BigQuery, Vertex AI, and more.",
-  Git: "Distributed version control system for tracking code changes and team collaboration.",
+    "Orchestration system for automating deployment, scaling, and management of containerized applications.",
+  AWS:
+    "Cloud computing platform hosting compute instances, scalable storage buckets, and secure private virtual networks.",
+  GCP:
+    "Cloud platform offering scalable serverless hosting, AI/ML compute, and analytical databases.",
+  Git:
+    "Distributed version control system for tracking source code history and collaborating across development branches.",
+  "C++":
+    "High-performance programming language designed for resource-heavy computations, algorithms, and system-level applications.",
+  Java:
+    "Object-oriented language for designing robust, enterprise-grade backend services and scalable web architectures.",
+  Lightroom:
+    "Professional image organization and editing suite for managing visual catalogs and processing photography assets.",
 };
 
 export const certifications = [
   {
-    name: "Certificate of Completion: AI Fluency Framework & Foundations",
+    name: "AI Fluency Framework & Foundations",
     issuer: "Anthropic",
     year: "2026",
     url: "https://verify.skilljar.com/c/88ivjpiszasq",
   },
   {
-    name: "Certificate of Completion: Introduction to Model Context Protocol",
+    name: "Introduction to Model Context Protocol",
     issuer: "Anthropic",
     year: "2026",
     url: "https://verify.skilljar.com/c/cmgpg76y63rs",
@@ -238,22 +245,23 @@ export const certifications = [
 
 export const timeline = [
   {
-    year: "2026",
-    title: "McKinsey Forward Program",
+    year: "2026 — Present",
+    title: "Full Stack Intern @ Praava Legal",
     description:
-      "Participating in the McKinsey Forward Program, developing leadership, problem-solving, and professional skills.",
+      "Developing web interfaces, writing API routes, and designing datastore integrations.",
+    url: "https://praavalegal.com",
   },
   {
     year: "2026",
-    title: "Infosys Springboard Internship",
+    title: "Forward Program @ McKinsey",
     description:
-      "Interning via Infosys Springboard, building production-ready features and learning enterprise software engineering practices.",
+      "Completed coursework on project planning, communication, and systematic problem solving.",
   },
   {
-    year: "2023",
+    year: "2023 — 2027",
     title: "KIIT University",
     description:
-      "Began B.Tech in Computer Science & Communication Engineering. Dived deep into DSA, OS, and DBMS fundamentals.",
+      "Studying B.Tech in Computer Science and Communication Engineering. Focused on algorithms, networks, database indexes, and system design.",
   },
 ];
 

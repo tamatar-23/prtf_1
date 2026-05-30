@@ -25,41 +25,59 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     const isDark = theme === 'dark';
     const newTheme = isDark ? 'light' : 'dark';
 
-    if (!document.startViewTransition || !e) {
+    if (!document.startViewTransition) {
       setTheme(newTheme);
       return;
     }
 
-    const x = e.clientX;
-    const y = e.clientY;
-    const endRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
-    );
+    try {
+      // Find the toggle button in the DOM to center the animation sweep on it
+      const button = document.querySelector('[aria-label="Toggle theme"]');
+      let x = window.innerWidth / 2;
+      let y = window.innerHeight / 2;
 
-    const transition = document.startViewTransition(() => {
-      setTheme(newTheme);
-    });
+      if (button) {
+        const rect = button.getBoundingClientRect();
+        x = rect.left + rect.width / 2;
+        y = rect.top + rect.height / 2;
+      } else if (e) {
+        x = e.clientX;
+        y = e.clientY;
+      }
 
-    transition.ready.then(() => {
-      const clipPath = [
-        `circle(0px at ${x}px ${y}px)`,
-        `circle(${endRadius}px at ${x}px ${y}px)`,
-      ];
-
-      document.documentElement.animate(
-        {
-          clipPath: isDark ? [...clipPath].reverse() : clipPath,
-        },
-        {
-          duration: 800,
-          easing: 'cubic-bezier(0.87, 0, 0.13, 1)',
-          pseudoElement: isDark
-            ? '::view-transition-old(root)'
-            : '::view-transition-new(root)',
-        }
+      const endRadius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y)
       );
-    });
+
+      const transition = document.startViewTransition(() => {
+        setTheme(newTheme);
+      });
+
+      transition.ready.then(() => {
+        const clipPath = [
+          `circle(0px at ${x}px ${y}px)`,
+          `circle(${endRadius}px at ${x}px ${y}px)`,
+        ];
+
+        document.documentElement.animate(
+          {
+            clipPath: isDark ? [...clipPath].reverse() : clipPath,
+          },
+          {
+            duration: 500, // snappier transition
+            easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+            pseudoElement: isDark
+              ? '::view-transition-old(root)'
+              : '::view-transition-new(root)',
+          }
+        );
+      }).catch(() => {
+        setTheme(newTheme);
+      });
+    } catch (err) {
+      setTheme(newTheme);
+    }
   };
 
   return (

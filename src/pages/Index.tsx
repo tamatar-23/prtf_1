@@ -7,40 +7,73 @@ import { Certifications } from '@/components/Certifications';
 import { Timeline } from '@/components/Timeline';
 import { Footer } from '@/components/Footer';
 import { personal } from '@/lib/data';
-import Grainient from '@/components/ui/Grainient';
 import { useTheme } from '@/hooks/use-theme';
+import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 const Index = () => {
-  const { theme } = useTheme();
-  // Add a small 8px custom cursor
+  const { theme, toggleTheme } = useTheme();
+
+  // Custom cursor & Keyboard shortcuts setup
   useEffect(() => {
-    // Basic custom cursor script (if not on mobile)
+    // 1. Brutalist square custom cursor
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    if (isMobile) return;
-
-    const cursor = document.createElement('div');
-    cursor.className = 'fixed w-2 h-2 bg-accent-2 rounded-full pointer-events-none z-[100] mix-blend-difference hidden md:block';
-    cursor.style.transition = 'transform 0.1s ease-out';
-    document.body.appendChild(cursor);
-
-    let mouseX = 0;
-    let mouseY = 0;
+    let cursor: HTMLDivElement | null = null;
+    
+    if (!isMobile) {
+      cursor = document.createElement('div');
+      cursor.className = 'fixed w-2 h-2 bg-text border border-bg pointer-events-none z-[100] hidden md:block [transition:transform_0.08s_ease-out]';
+      document.body.appendChild(cursor);
+    }
 
     const updateCursor = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursor.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+      if (cursor) {
+        cursor.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
+      }
+    };
+
+    // 2. Keyboard shortcuts handler
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Avoid triggering when user is typing in an input
+      if (
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA' ||
+        document.activeElement?.isContentEditable
+      ) {
+        return;
+      }
+
+      const key = e.key.toLowerCase();
+
+      if (key === 't') {
+        // Toggle theme (simulate MouseEvent for radial shift)
+        const mockEvent = {
+          clientX: window.innerWidth / 2,
+          clientY: window.innerHeight / 2,
+        } as unknown as React.MouseEvent;
+        toggleTheme(mockEvent);
+      } else if (key === 'm') {
+        // Toggle navigation menu
+        document.querySelector<HTMLButtonElement>('.sm-toggle')?.click();
+      } else if (key === 'g') {
+        // Go to GitHub
+        window.open(personal.github, '_blank');
+      } else if (key === 'l') {
+        // Go to LinkedIn
+        window.open(personal.linkedin, '_blank');
+      }
     };
 
     window.addEventListener('mousemove', updateCursor);
+    window.addEventListener('keydown', handleKeyDown);
 
     return () => {
       window.removeEventListener('mousemove', updateCursor);
-      if (document.body.contains(cursor)) {
+      window.removeEventListener('keydown', handleKeyDown);
+      if (cursor && document.body.contains(cursor)) {
         document.body.removeChild(cursor);
       }
     };
-  }, []);
+  }, [toggleTheme]);
 
   const menuItems = [
     { label: 'Home', ariaLabel: 'Go to Home section', link: '#hero' },
@@ -53,50 +86,59 @@ const Index = () => {
   const socialItems = [
     { label: 'GitHub', link: personal.github },
     { label: 'LinkedIn', link: personal.linkedin },
+    { label: 'Spotify', link: 'https://open.spotify.com/user/7da8gcgxxzb4w0d6fbuhu32wk' },
     { label: 'Instagram', link: personal.instagram },
   ];
 
   return (
-    <div className="relative overflow-x-hidden bg-bg text-text selection:bg-accent-2 selection:text-white">
-      <div className="fixed inset-0 z-0 pointer-events-none opacity-60 dark:opacity-60 transition-opacity duration-700">
-        {theme === 'dark' ? (
-          <Grainient
-            timeSpeed={0.15}
-            warpStrength={0.3}
-            grainAmount={0.05}
-            color1="#1a103c"
-            color2="#0f0820"
-            color3="#2d1b4e"
-          />
-        ) : (
-          <Grainient
-            timeSpeed={0.15}
-            warpStrength={0.3}
-            grainAmount={0.05}
-            color1="#DCE3F8"
-            color2="#A5B8EF"
-            color3="#E8DCF8"
-          />
-        )}
+    <div className="relative overflow-x-hidden bg-bg text-text selection:bg-text selection:text-bg transition-colors duration-300">
+      {/* Subtle warm ambient light spots to add editorial depth */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div 
+          className="absolute -top-[20%] -left-[10%] w-[60%] aspect-square rounded-full bg-[#FBF3DB]/20 dark:bg-[#2C261A]/10 blur-[120px] animate-ambient-drift"
+          style={{ willChange: 'transform' }}
+        />
+        <div 
+          className="absolute -bottom-[20%] -right-[10%] w-[50%] aspect-square rounded-full bg-[#E1F3FE]/20 dark:bg-[#1D262F]/10 blur-[100px] animate-ambient-drift"
+          style={{ animationDelay: '-10s', willChange: 'transform' }}
+        />
       </div>
 
       <StaggeredMenu
         position="right"
-        colors={['#B497CF', '#330fd1', '#FF9FFC']}
+        colors={theme === 'dark' ? ['#1C1C1B', '#2A2A28'] : ['#F7F6F3', '#EAEAEA']}
         items={menuItems}
         socialItems={socialItems}
         displaySocials={true}
-        displayItemNumbering={true}
+        displayItemNumbering={false}
         resumeUrl={personal.resumeUrl}
       />
-      <main>
-        <Hero />
-        <Projects />
-        <Skills />
-        <Certifications />
-        <Timeline />
+      
+      <main className="relative z-10">
+        <ScrollReveal>
+          <Hero />
+        </ScrollReveal>
+        
+        <ScrollReveal delay={100}>
+          <Projects />
+        </ScrollReveal>
+        
+        <ScrollReveal delay={100}>
+          <Skills />
+        </ScrollReveal>
+        
+        <ScrollReveal delay={100}>
+          <Certifications />
+        </ScrollReveal>
+        
+        <ScrollReveal delay={100}>
+          <Timeline />
+        </ScrollReveal>
       </main>
-      <Footer />
+      
+      <ScrollReveal>
+        <Footer />
+      </ScrollReveal>
     </div>
   );
 };
