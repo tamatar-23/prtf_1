@@ -65,7 +65,7 @@ export const projects = [
   {
     id: "gitconsistent",
     title: "GitConsistent",
-    subtitle: "Habit Tracking Platform",
+    subtitle: "Personal Growth Platform",
     description:
       "Production habit-tracking web application supporting 500+ concurrent users with 99.9% uptime. Features real-time sync and cost-aware LLM pipeline routing.",
     tags: ["Next.js", "TypeScript", "Firebase", "LLaMA 3.1", "Tailwind CSS"],
@@ -184,16 +184,12 @@ export const skillDefinitions: Record<string, string> = {
     "Containerization platform to package applications with all dependencies into reproducible, portable images.",
   Kubernetes:
     "Orchestration system for automating deployment, scaling, and management of containerized applications.",
-  AWS:
-    "Cloud computing platform hosting compute instances, scalable storage buckets, and secure private virtual networks.",
-  GCP:
-    "Cloud platform offering scalable serverless hosting, AI/ML compute, and analytical databases.",
-  Git:
-    "Distributed version control system for tracking source code history and collaborating across development branches.",
+  AWS: "Cloud computing platform hosting compute instances, scalable storage buckets, and secure private virtual networks.",
+  GCP: "Cloud platform offering scalable serverless hosting, AI/ML compute, and analytical databases.",
+  Git: "Distributed version control system for tracking source code history and collaborating across development branches.",
   "C++":
     "High-performance programming language designed for resource-heavy computations, algorithms, and system-level applications.",
-  Java:
-    "Object-oriented language for designing robust, enterprise-grade backend services and scalable web architectures.",
+  Java: "Object-oriented language for designing robust, enterprise-grade backend services and scalable web architectures.",
   Lightroom:
     "Professional image organization and editing suite for managing visual catalogs and processing photography assets.",
 };
