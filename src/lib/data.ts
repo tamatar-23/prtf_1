@@ -58,7 +58,7 @@ export const projects = [
       "Distributed training with DDP + AMP",
       "Live market data integration via Fyers API",
     ],
-    repoUrl: "https://github.com/tamatar-23/t1me_50",
+    repoUrl: "https://github.com/tamatar-23/t1me",
     liveUrl: null,
     accent: "#FF9FFC",
   },
