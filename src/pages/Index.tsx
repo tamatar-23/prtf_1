@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import StaggeredMenu from '@/components/ui/StaggeredMenu';
 import { Hero } from '@/components/Hero';
 import { Projects } from '@/components/Projects';
+import { GitHubActivity } from '@/components/GitHubActivity';
 import { Skills } from '@/components/Skills';
 import { Certifications } from '@/components/Certifications';
 import { Timeline } from '@/components/Timeline';
@@ -78,6 +79,7 @@ const Index = () => {
   const menuItems = [
     { label: 'Home', ariaLabel: 'Go to Home section', link: '#hero' },
     { label: 'Works', ariaLabel: 'Go to Projects section', link: '#projects' },
+    { label: 'Activity', ariaLabel: 'Go to GitHub Activity section', link: '#github' },
     { label: 'Skills', ariaLabel: 'Go to Skills section', link: '#skills' },
     { label: 'Certifications', ariaLabel: 'Go to Certifications section', link: '#certifications' },
     { label: 'Journey', ariaLabel: 'Go to Journey section', link: '#timeline' },
@@ -119,19 +121,23 @@ const Index = () => {
           <Hero />
         </ScrollReveal>
         
-        <ScrollReveal delay={100}>
+        <ScrollReveal>
           <Projects />
         </ScrollReveal>
         
-        <ScrollReveal delay={100}>
+        <ScrollReveal>
+          <GitHubActivity />
+        </ScrollReveal>
+
+        <ScrollReveal>
           <Skills />
         </ScrollReveal>
         
-        <ScrollReveal delay={100}>
+        <ScrollReveal>
           <Certifications />
         </ScrollReveal>
         
-        <ScrollReveal delay={100}>
+        <ScrollReveal>
           <Timeline />
         </ScrollReveal>
       </main>

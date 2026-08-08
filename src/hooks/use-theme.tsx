@@ -50,30 +50,52 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         Math.max(y, window.innerHeight - y)
       );
 
+      if (isDark) {
+        document.documentElement.classList.add('dark-to-light');
+      }
+
       const transition = document.startViewTransition(() => {
         setTheme(newTheme);
       });
 
       transition.ready.then(() => {
-        const clipPath = [
-          `circle(0px at ${x}px ${y}px)`,
-          `circle(${endRadius}px at ${x}px ${y}px)`,
-        ];
-
-        document.documentElement.animate(
-          {
-            clipPath: isDark ? [...clipPath].reverse() : clipPath,
-          },
-          {
-            duration: 500, // snappier transition
-            easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-            pseudoElement: isDark
-              ? '::view-transition-old(root)'
-              : '::view-transition-new(root)',
-          }
-        );
+        if (!isDark) {
+          // Light -> Dark: Expand dark theme outward from the button
+          document.documentElement.animate(
+            {
+              clipPath: [
+                `circle(0px at ${x}px ${y}px)`,
+                `circle(${endRadius}px at ${x}px ${y}px)`,
+              ],
+            },
+            {
+              duration: 450,
+              easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+              pseudoElement: '::view-transition-new(root)',
+            }
+          );
+        } else {
+          // Dark -> Light: Shrink dark theme back into the button
+          document.documentElement.animate(
+            {
+              clipPath: [
+                `circle(${endRadius}px at ${x}px ${y}px)`,
+                `circle(0px at ${x}px ${y}px)`,
+              ],
+            },
+            {
+              duration: 450,
+              easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+              pseudoElement: '::view-transition-old(root)',
+            }
+          );
+        }
       }).catch(() => {
         setTheme(newTheme);
+      });
+
+      transition.finished.finally(() => {
+        document.documentElement.classList.remove('dark-to-light');
       });
     } catch (err) {
       setTheme(newTheme);

@@ -19,8 +19,8 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({ children, delay = 0,
         }
       },
       {
-        threshold: 0.05,
-        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.01,
+        rootMargin: '200px 0px 100px 0px',
       }
     );
 
@@ -37,9 +37,11 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({ children, delay = 0,
     <div
       ref={elementRef}
       style={{
-        transform: isVisible ? 'translateY(0)' : 'translateY(12px)',
+        transform: isVisible ? 'translateY(0)' : 'translateY(6px)',
         opacity: isVisible ? 1 : 0,
-        transition: `transform 600ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, opacity 600ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
+        transition: isVisible
+          ? `transform 200ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms cubic-bezier(0.16, 1, 0.3, 1)`
+          : 'none',
         willChange: 'transform, opacity',
       }}
       className={className}

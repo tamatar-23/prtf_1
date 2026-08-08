@@ -117,15 +117,17 @@ body, header, main, footer, section, div, button, a, span, p, h1, h2, h3, h4, h5
   animation: none;
   mix-blend-mode: normal;
 }
+/* Light to Dark: new(root) expands on top */
 ::view-transition-old(root) {
-  z-index: 9999;
+  z-index: 1;
 }
 ::view-transition-new(root) {
-  z-index: 1;
-}
-.dark::view-transition-old(root) {
-  z-index: 1;
-}
-.dark::view-transition-new(root) {
   z-index: 9999;
+}
+/* Dark to Light: old(root) shrinks back on top to reveal light mode underneath */
+.dark-to-light::view-transition-old(root) {
+  z-index: 9999;
+}
+.dark-to-light::view-transition-new(root) {
+  z-index: 1;
 }
