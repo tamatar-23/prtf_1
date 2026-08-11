@@ -23,10 +23,42 @@ const customTheme = {
   ],
 };
 
+// Helper function to auto-pad missing dates between dataset end date and current date
+const ensureDaysUpToToday = (baseDays: Activity[]): Activity[] => {
+  if (!baseDays || baseDays.length === 0) return baseDays;
+
+  const result = [...baseDays];
+  const lastEntry = result[result.length - 1];
+  const todayStr = new Date().toISOString().split('T')[0];
+
+  if (lastEntry.date >= todayStr) {
+    return result;
+  }
+
+  let currentDate = new Date(lastEntry.date);
+  currentDate.setUTCDate(currentDate.getUTCDate() + 1);
+  const targetDate = new Date(todayStr);
+
+  while (currentDate <= targetDate) {
+    const dateStr = currentDate.toISOString().split('T')[0];
+    result.push({
+      date: dateStr,
+      count: 0,
+      level: 0,
+    });
+    currentDate.setUTCDate(currentDate.getUTCDate() + 1);
+  }
+
+  return result;
+};
+
 export const GitHubActivity: React.FC = () => {
   const { theme } = useTheme();
-  const [activities, setActivities] = useState<Activity[]>(exactGitHubContributions.days);
-  const [totalCount, setTotalCount] = useState<number>(exactGitHubContributions.total);
+  const initialPaddedDays = ensureDaysUpToToday(exactGitHubContributions.days);
+  const [activities, setActivities] = useState<Activity[]>(initialPaddedDays);
+  const [totalCount, setTotalCount] = useState<number>(
+    initialPaddedDays.reduce((sum, item) => sum + item.count, 0)
+  );
 
   const username = personal.github.split('/').filter(Boolean).pop() || 'tamatar-23';
 

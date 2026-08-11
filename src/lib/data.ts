@@ -8,7 +8,7 @@ export const personal = {
   phone: "+91 7606992021",
   location: "India",
   resumeUrl:
-    "https://drive.google.com/file/d/17hX98iAU4bWFcFbk9I8VO29VZDvVdwSR/view?usp=sharing",
+    "https://drive.google.com/file/d/1r2alxdbZGByTPI955AmlvXV3O0JYFOw8/view?usp=sharing",
   github: "https://github.com/tamatar-23",
   linkedin: "https://www.linkedin.com/in/gouravk2304",
   instagram: "https://instagram.com/gouravk2304",
@@ -241,7 +241,7 @@ export const certifications = [
 
 export const timeline = [
   {
-    year: "May 2026 — Present",
+    year: "May 2026 — Aug 2026",
     title: "Full Stack Intern @ Praava Legal",
     description:
       "Developing web interfaces, writing API routes, and designing datastore integrations.",
