@@ -2,43 +2,8 @@ import { Activity } from 'react-activity-calendar';
 
 // Exact contribution dataset extracted from @tamatar-23 GitHub profile matching actual activity
 export const exactGitHubContributions: { total: number; days: Activity[] } = {
-  "total": 411,
+  "total": 412,
   "days": [
-    {
-      "date": "2025-10-19",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-10-20",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-10-21",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-10-22",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-10-23",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-10-24",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-10-25",
-      "count": 0,
-      "level": 0
-    },
     {
       "date": "2025-10-26",
       "count": 0,
@@ -1856,6 +1821,11 @@ export const exactGitHubContributions: { total: number; days: Activity[] } = {
     },
     {
       "date": "2026-10-24",
+      "count": 1,
+      "level": 1
+    },
+    {
+      "date": "2026-10-25",
       "count": 1,
       "level": 1
     }
