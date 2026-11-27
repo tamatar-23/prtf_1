@@ -1,108 +1,100 @@
-import React, { useLayoutEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { timeline } from '@/lib/data';
+import React from 'react';
+import { ArrowUpRight } from '@phosphor-icons/react';
+import { credentials, timeline } from '@/lib/data';
+import { Reveal } from '@/components/ui/Reveal';
 
-gsap.registerPlugin(ScrollTrigger);
-
-export const Timeline = () => {
-  const containerRef = useRef<HTMLElement>(null);
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const items = gsap.utils.toArray('.timeline-item') as HTMLElement[];
-
-      items.forEach((item) => {
-        const dot = item.querySelector('.timeline-dot');
-        const content = item.querySelector('.timeline-content');
-
-        gsap.fromTo(content,
-          { y: 16, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: item,
-              start: 'top 90%',
-            }
-          }
-        );
-
-        gsap.fromTo(dot,
-          { scale: 0.8, opacity: 0.4 },
-          {
-            scale: 1,
-            opacity: 1,
-            borderColor: 'var(--color-text)',
-            backgroundColor: 'var(--color-bg)',
-            duration: 0.4,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: item,
-              start: 'top 90%',
-              toggleActions: 'play none none reverse'
-            }
-          }
-        );
-      });
-    }, containerRef);
-    return () => ctx.revert();
-  }, []);
-
+export const Timeline: React.FC = () => {
   return (
-    <section id="timeline" ref={containerRef} className="py-28 px-6 bg-bg text-text relative z-10 border-b border-border">
-      <div className="container mx-auto max-w-4xl">
-        <h2 className="text-3xl md:text-4xl font-serif-editorial font-normal mb-12 text-text tracking-tight">
-          Journey
-        </h2>
+    <section id="journey" className="cv-auto bg-bg py-24 md:py-28">
+      <div className="mx-auto max-w-5xl px-6">
+        <div className="grid grid-cols-1 gap-14 md:grid-cols-12 md:gap-12">
+          {/* Left column: Journey timeline */}
+          <div className="md:col-span-7">
+            <Reveal>
+              <h2 className="mb-10 text-2xl font-medium tracking-tight text-text md:text-3xl">
+                Journey
+              </h2>
+            </Reveal>
 
-        {/* Left-aligned vertical flow (Vercel & Claude inspired) */}
-        <div className="relative pl-8 md:pl-12 ml-2 md:ml-4 flex flex-col gap-12 pb-8">
-          {/* Vertical track line */}
-          <div className="absolute left-0 top-2 bottom-0 w-px bg-border select-none" />
+            <div className="relative space-y-10">
+              {/* Vertical rail anchored cleanly at the center of the first dot */}
+              <div
+                className="pointer-events-none absolute left-[5px] top-[11px] bottom-2 z-0 w-px bg-border"
+                aria-hidden="true"
+              />
 
-          {timeline.map((item, i) => (
-            <div
-              key={i}
-              className="timeline-item relative flex flex-col items-start w-full group"
-            >
-              {/* Dot - pinned on the left line */}
-              <div className="timeline-dot absolute -left-[39px] md:-left-[55px] top-1.5 w-3.5 h-3.5 rounded-full bg-bg border-2 border-border z-10 transition-all duration-300 group-hover:border-text" />
+              {timeline.map((item, idx) => (
+                <Reveal key={item.title} delay={idx * 0.04}>
+                  <div className="relative pl-7 md:pl-9">
+                    <span
+                      className="absolute left-0 top-[5px] z-10 h-[11px] w-[11px] rounded-full border-[1.5px] border-text bg-bg"
+                      aria-hidden="true"
+                    />
+                    <span className="block font-mono text-xs text-text-muted">
+                      {item.year}
+                    </span>
 
-              {/* Text content block */}
-              <div className="timeline-content w-full flex flex-col items-start">
-                {/* Year Label - Monospace */}
-                <span className="text-xs font-mono-tech text-text-muted mb-2 select-none tracking-wide">
-                  [{item.year}]
-                </span>
-                
-                {/* Title */}
-                {item.url ? (
+                    {item.url ? (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-1.5 inline-flex items-center gap-1.5 text-lg font-medium tracking-tight text-text transition-opacity duration-150 hover:opacity-75"
+                      >
+                        <span>{item.title}</span>
+                        <ArrowUpRight size={15} weight="regular" />
+                      </a>
+                    ) : (
+                      <h3 className="mt-1.5 text-lg font-medium tracking-tight text-text">
+                        {item.title}
+                      </h3>
+                    )}
+
+                    <p className="mt-2 max-w-[54ch] text-sm leading-relaxed text-text-muted">
+                      {item.description}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+
+          {/* Right column: Curated credentials */}
+          <div className="md:col-span-5">
+            <Reveal>
+              <h2 className="mb-10 text-2xl font-medium tracking-tight text-text md:text-3xl">
+                Credentials
+              </h2>
+            </Reveal>
+
+            <Reveal delay={0.05}>
+              <div className="divide-y divide-border border-y border-border">
+                {credentials.map((cert) => (
                   <a
-                    href={item.url}
+                    key={cert.name}
+                    href={cert.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:underline text-text group-hover:text-text-muted transition-colors duration-200"
+                    className="group flex items-start justify-between gap-4 py-4 transition-colors duration-150"
                   >
-                    <h4 className="text-xl font-serif-editorial font-normal mb-2 leading-tight">
-                      {item.title}
-                    </h4>
+                    <div>
+                      <p className="text-sm font-medium leading-snug text-text transition-opacity duration-150 group-hover:opacity-75">
+                        {cert.name}
+                      </p>
+                      <p className="mt-1 font-mono text-xs text-text-muted">
+                        {cert.issuer} · {cert.year}
+                      </p>
+                    </div>
+                    <ArrowUpRight
+                      size={15}
+                      weight="regular"
+                      className="mt-0.5 shrink-0 text-text-muted transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-text"
+                    />
                   </a>
-                ) : (
-                  <h4 className="text-xl font-serif-editorial font-normal text-text mb-2 transition-colors duration-200 group-hover:text-text-muted leading-tight">
-                    {item.title}
-                  </h4>
-                )}
-                
-                {/* Description */}
-                <p className="text-text-muted text-sm md:text-base leading-relaxed font-sans max-w-2xl">
-                  {item.description}
-                </p>
+                ))}
               </div>
-            </div>
-          ))}
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>

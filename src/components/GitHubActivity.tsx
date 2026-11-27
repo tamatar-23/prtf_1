@@ -1,29 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityCalendar, Activity } from 'react-activity-calendar';
+import { ArrowUpRight, GithubLogo } from '@phosphor-icons/react';
 import { useTheme } from '@/hooks/use-theme';
 import { personal } from '@/lib/data';
 import { exactGitHubContributions } from '@/lib/github-data';
-import { Github, ExternalLink } from './ui/Icons';
+import { Reveal } from '@/components/ui/Reveal';
 
-// Custom theme palette matching portfolio's high-contrast editorial grayscale system with enhanced visibility
 const customTheme = {
-  light: [
-    '#E5E5E2', // Level 0: Crisp, visible neutral gray against light surface
-    '#A8A7A1', // Level 1: Mid-light gray
-    '#706F69', // Level 2: Medium charcoal
-    '#3D3C38', // Level 3: Dark charcoal
-    '#121211', // Level 4: Deep solid obsidian black
-  ],
-  dark: [
-    '#2B2B28', // Level 0: Distinct dark neutral block against dark surface
-    '#52524D', // Level 1: Mid-dark gray
-    '#87867E', // Level 2: Medium light gray
-    '#C4C3BA', // Level 3: Bright light gray
-    '#FFFFFF', // Level 4: Brilliant solid white
-  ],
+  light: ['#EAEAE7', '#B8B8B2', '#82827C', '#4A4A46', '#141413'],
+  dark: ['#242422', '#494945', '#787872', '#B5B5AE', '#F2F2F0'],
 };
 
-// Helper function to auto-pad missing dates between dataset end date and current date
 const ensureDaysUpToToday = (baseDays: Activity[]): Activity[] => {
   if (!baseDays || baseDays.length === 0) return baseDays;
 
@@ -35,14 +22,13 @@ const ensureDaysUpToToday = (baseDays: Activity[]): Activity[] => {
     return result;
   }
 
-  let currentDate = new Date(lastEntry.date);
+  const currentDate = new Date(lastEntry.date);
   currentDate.setUTCDate(currentDate.getUTCDate() + 1);
   const targetDate = new Date(todayStr);
 
   while (currentDate <= targetDate) {
-    const dateStr = currentDate.toISOString().split('T')[0];
     result.push({
-      date: dateStr,
+      date: currentDate.toISOString().split('T')[0],
       count: 0,
       level: 0,
     });
@@ -52,130 +38,166 @@ const ensureDaysUpToToday = (baseDays: Activity[]): Activity[] => {
   return result;
 };
 
+const initialDays = ensureDaysUpToToday(exactGitHubContributions.days);
+const initialTotal = initialDays.reduce((sum, item) => sum + item.count, 0);
+
+interface CalendarCanvasProps {
+  data: Activity[];
+  colorScheme: 'light' | 'dark';
+}
+
+const MemoizedCalendar = React.memo<CalendarCanvasProps>(
+  ({ data, colorScheme }) => (
+    <ActivityCalendar
+      data={data}
+      theme={customTheme}
+      colorScheme={colorScheme}
+      blockSize={12}
+      blockMargin={4}
+      blockRadius={2}
+      fontSize={12}
+      labels={{
+        months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        weekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        totalCount: '{{count}} contributions in the last year',
+        legend: {
+          less: 'Less',
+          more: 'More',
+        },
+      }}
+      renderBlock={(block, activity) =>
+        React.cloneElement(block, {
+          children: (
+            <title>
+              {activity.count === 0
+                ? `No contributions on ${activity.date}`
+                : `${activity.count} contribution${activity.count > 1 ? 's' : ''} on ${activity.date}`}
+            </title>
+          ),
+        })
+      }
+    />
+  )
+);
+
+MemoizedCalendar.displayName = 'MemoizedCalendar';
+
 export const GitHubActivity: React.FC = () => {
   const { theme } = useTheme();
-  const initialPaddedDays = ensureDaysUpToToday(exactGitHubContributions.days);
-  const [activities, setActivities] = useState<Activity[]>(initialPaddedDays);
-  const [totalCount, setTotalCount] = useState<number>(
-    initialPaddedDays.reduce((sum, item) => sum + item.count, 0)
-  );
+  const [activities, setActivities] = useState<Activity[]>(initialDays);
+  const [totalCount, setTotalCount] = useState<number>(initialTotal);
 
   const username = personal.github.split('/').filter(Boolean).pop() || 'tamatar-23';
 
   useEffect(() => {
     let isMounted = true;
 
-    // Dynamically merge live events from GitHub API if available
     const syncLiveEvents = async () => {
       try {
         const eventsRes = await fetch(`https://api.github.com/users/${username}/events`);
-        if (eventsRes.ok) {
-          const events = await eventsRes.json();
-          if (Array.isArray(events) && events.length > 0) {
-            const eventCounts: Record<string, number> = {};
+        if (!eventsRes.ok) return;
 
-            events.forEach((evt: any) => {
-              if (evt.created_at) {
-                const dateStr = evt.created_at.split('T')[0];
-                eventCounts[dateStr] = (eventCounts[dateStr] || 0) + 1;
-              }
-            });
+        const events = await eventsRes.json();
+        if (!Array.isArray(events) || events.length === 0) return;
 
-            if (isMounted && Object.keys(eventCounts).length > 0) {
-              setActivities((prev) => {
-                const updated = prev.map((item) => {
-                  const liveCount = eventCounts[item.date];
-                  if (liveCount) {
-                    const newCount = Math.max(item.count, liveCount);
-                    const newLevel = Math.min(4, Math.max(1, Math.ceil(newCount / 2))) as 0 | 1 | 2 | 3 | 4;
-                    return { ...item, count: newCount, level: newLevel };
-                  }
-                  return item;
-                });
-                setTotalCount(updated.reduce((sum, item) => sum + item.count, 0));
-                return updated;
-              });
-            }
+        const eventCounts: Record<string, number> = {};
+        events.forEach((evt: { created_at?: string }) => {
+          if (evt.created_at) {
+            const dateStr = evt.created_at.split('T')[0];
+            eventCounts[dateStr] = (eventCounts[dateStr] || 0) + 1;
           }
-        }
-      } catch (err) {
-        console.warn('Live GitHub event sync skipped:', err);
+        });
+
+        if (!isMounted || Object.keys(eventCounts).length === 0) return;
+
+        setActivities((prev) => {
+          let changed = false;
+          const updated = prev.map((item) => {
+            const liveCount = eventCounts[item.date];
+            if (liveCount && liveCount > item.count) {
+              changed = true;
+              const newLevel = Math.min(4, Math.max(1, Math.ceil(liveCount / 2))) as
+                | 0
+                | 1
+                | 2
+                | 3
+                | 4;
+              return { ...item, count: liveCount, level: newLevel };
+            }
+            return item;
+          });
+
+          if (!changed) return prev;
+          setTotalCount(updated.reduce((sum, item) => sum + item.count, 0));
+          return updated;
+        });
+      } catch {
+        // Static build-time dataset already provides full fallback coverage.
       }
     };
 
-    syncLiveEvents();
+    const idleWindow = window as Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+
+    if (typeof idleWindow.requestIdleCallback === 'function') {
+      const id = idleWindow.requestIdleCallback(() => {
+        void syncLiveEvents();
+      }, { timeout: 2500 });
+      return () => {
+        isMounted = false;
+        idleWindow.cancelIdleCallback?.(id);
+      };
+    }
+
+    const timer = window.setTimeout(() => {
+      void syncLiveEvents();
+    }, 1500);
 
     return () => {
       isMounted = false;
+      window.clearTimeout(timer);
     };
   }, [username]);
 
   return (
-    <section id="github" className="py-24 px-6 bg-bg relative z-10 border-b border-border select-none">
-      <div className="container mx-auto px-0 max-w-5xl">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3">
-          <div>
-            <span className="text-xs font-mono-tech text-text-muted uppercase tracking-wider block mb-1">
-              [Open Source Activity]
-            </span>
-            <h2 className="text-3xl md:text-4xl font-serif-editorial font-normal text-text tracking-tight flex items-center gap-3">
-              GitHub Activity
-            </h2>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <span className="text-xs md:text-sm font-mono-tech text-text-muted">
-              {`${totalCount} GitHub activities in the last year`}
-            </span>
+    <section id="github" className="cv-auto border-b border-border bg-bg py-24 md:py-28">
+      <div className="mx-auto max-w-5xl px-6">
+        <Reveal>
+          <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <h2 className="text-2xl font-medium tracking-tight text-text md:text-3xl">
+                Open Source
+              </h2>
+              <p className="mt-1 font-mono text-xs text-text-muted">
+                {`${totalCount} contributions in the last year`}
+              </p>
+            </div>
 
             <a
               href={personal.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-mono-tech text-text hover:text-text-muted transition-colors border border-border bg-bg-elevated px-3 py-1.5 rounded-none"
+              className="inline-flex w-fit items-center gap-1.5 rounded-md border border-border bg-bg-elevated px-3 py-1.5 font-mono text-xs text-text transition-colors duration-150 hover:bg-bg-warm active:scale-[0.98]"
             >
-              <Github size={14} />
+              <GithubLogo size={14} weight="regular" />
               <span>@{username}</span>
-              <ExternalLink size={12} />
+              <ArrowUpRight size={13} weight="regular" />
             </a>
           </div>
-        </div>
+        </Reveal>
 
-        {/* Contribution Graph Container */}
-        <div className="border border-border bg-bg-elevated dark:bg-[#1C1C1B]/40 p-6 md:p-8 rounded-none transition-all duration-300 relative overflow-x-auto">
-          <div className="min-w-[700px] flex justify-center py-2">
-            <ActivityCalendar
-              data={activities}
-              theme={customTheme}
-              colorScheme={theme === 'dark' ? 'dark' : 'light'}
-              blockSize={12}
-              blockMargin={4}
-              blockRadius={2}
-              fontSize={12}
-              labels={{
-                months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                weekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                totalCount: '{{count}} GitHub activities in the last year',
-                legend: {
-                  less: 'Less active',
-                  more: 'More active',
-                },
-              }}
-              renderBlock={(block, activity) =>
-                React.cloneElement(block, {
-                  children: (
-                    <title>
-                      {activity.count === 0
-                        ? `No contributions on ${activity.date}`
-                        : `${activity.count} contribution${activity.count > 1 ? 's' : ''} on ${activity.date}`}
-                    </title>
-                  ),
-                })
-              }
-            />
+        <Reveal delay={0.05}>
+          <div className="overflow-x-auto rounded-md border border-border bg-bg-elevated p-6 md:p-8">
+            <div className="flex min-w-[700px] justify-center py-1">
+              <MemoizedCalendar
+                data={activities}
+                colorScheme={theme === 'dark' ? 'dark' : 'light'}
+              />
+            </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,129 +1,123 @@
-import React, { useLayoutEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { Download, Github, Instagram, Keyboard, Linkedin, Mail, Spotify } from './ui/Icons';
+import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import {
+  ArrowDownRight,
+  ArrowUpRight,
+  EnvelopeSimple,
+  FileText,
+  GithubLogo,
+  InstagramLogo,
+  Keyboard,
+  LinkedinLogo,
+  SpotifyLogo,
+} from '@phosphor-icons/react';
 import { personal } from '@/lib/data';
 
-export const Hero = () => {
-  const containerRef = useRef<HTMLElement>(null);
+const profileLinks = [
+  {
+    label: 'GitHub',
+    href: personal.github,
+    icon: <GithubLogo size={15} weight="regular" />,
+  },
+  {
+    label: 'LinkedIn',
+    href: personal.linkedin,
+    icon: <LinkedinLogo size={15} weight="regular" />,
+  },
+  {
+    label: 'Resume',
+    href: personal.resumeUrl,
+    icon: <FileText size={15} weight="regular" />,
+  },
+  {
+    label: 'Instagram',
+    href: personal.instagram,
+    icon: <InstagramLogo size={15} weight="regular" />,
+  },
+  {
+    label: 'Monkeytype',
+    href: personal.monkeytype,
+    icon: <Keyboard size={15} weight="regular" />,
+  },
+  {
+    label: 'Spotify',
+    href: personal.spotify,
+    icon: <SpotifyLogo size={15} weight="regular" />,
+  },
+];
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.hero-anim',
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, stagger: 0.08, ease: 'power3.out', delay: 0.1 }
-      );
-    }, containerRef);
-    return () => ctx.revert();
-  }, []);
+export const Hero: React.FC = () => {
+  const reduce = useReducedMotion();
+
+  const motionProps = reduce
+    ? {}
+    : {
+        initial: { opacity: 0, y: 14 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
+      };
 
   return (
-    <section id="hero" ref={containerRef} className="relative min-h-[100dvh] flex items-center pt-24 pb-20 overflow-hidden bg-bg">
-      <div className="container relative z-10 mx-auto px-6 max-w-5xl">
-        <div className="max-w-4xl">
-          <h2 className="hero-anim text-2xl md:text-3xl font-normal text-text-muted mb-4 font-serif-editorial italic select-none">
-            Gourav Mishra
-          </h2>
-
-          <h1 className="hero-anim text-text font-serif-editorial tracking-tight leading-[1.05] mb-8 font-normal" style={{ fontSize: 'clamp(3.5rem, 8.5vw, 6.5rem)' }}>
-            Full Stack AI Developer
-          </h1>
-
-          <p className="hero-anim text-text-muted text-lg md:text-xl max-w-2xl leading-relaxed font-sans mb-10">
-            I write clean code that connects AI models to web applications. I build reliable backends and fast user interfaces.
+    <section
+      id="hero"
+      className="flex min-h-[calc(100dvh-4rem)] items-center border-b border-border bg-bg py-16 md:py-20"
+    >
+      <div className="mx-auto w-full max-w-5xl px-6">
+        <motion.div {...motionProps} className="max-w-4xl">
+          <p className="mb-4 text-lg font-medium tracking-tight text-text-muted md:text-xl">
+            {personal.name}
           </p>
 
-          {/* Social Links & CTA Buttons */}
-          <div className="hero-anim flex flex-wrap items-center gap-3 mb-12">
-            {/* Primary Action Button */}
-            <a 
-              href={personal.resumeUrl} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-2 bg-text text-bg border border-text rounded-[6px] px-6 py-3 text-sm font-medium transition-all duration-200 hover:bg-[#333333] active:scale-98"
+          <h1 className="mb-6 text-balance text-4xl font-medium tracking-tight leading-[1.06] text-text sm:text-5xl lg:text-[3.5rem]">
+            {personal.headline}
+          </h1>
+
+          <p className="mb-10 max-w-[56ch] text-base leading-relaxed text-text-muted sm:text-lg">
+            {personal.bio}
+          </p>
+
+          {/* Primary & Secondary Actions */}
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href={`mailto:${personal.email}`}
+              className="inline-flex items-center gap-2 whitespace-nowrap rounded-md border border-text bg-text px-5 py-2.5 text-sm font-medium text-bg transition-opacity duration-150 hover:opacity-90 active:scale-[0.98]"
             >
-              <Download size={16} strokeWidth={2.4} /> Download Resume
+              <EnvelopeSimple size={16} weight="regular" />
+              <span>Get in touch</span>
             </a>
 
-            {/* Secondary Social Buttons */}
-            <a 
-              href={personal.linkedin} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-2 border border-border rounded-[6px] px-5 py-3 text-sm font-medium text-text bg-bg-elevated hover:bg-bg-warm transition-all duration-200 active:scale-98"
+            <a
+              href="#works"
+              className="inline-flex items-center gap-2 whitespace-nowrap rounded-md border border-border bg-bg-elevated px-5 py-2.5 text-sm font-medium text-text transition-colors duration-150 hover:bg-bg-warm active:scale-[0.98]"
             >
-              <Linkedin size={16} /> LinkedIn
-            </a>
-            
-            <a 
-              href={personal.github} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-2 border border-border rounded-[6px] px-5 py-3 text-sm font-medium text-text bg-bg-elevated hover:bg-bg-warm transition-all duration-200 active:scale-98"
-            >
-              <Github size={16} /> GitHub
-            </a>
-
-            <a 
-              href="https://open.spotify.com/user/7da8gcgxxzb4w0d6fbuhu32wk" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-2 border border-border rounded-[6px] px-5 py-3 text-sm font-medium text-text bg-bg-elevated hover:bg-bg-warm transition-all duration-200 active:scale-98"
-            >
-              <Spotify size={16} /> Spotify
-            </a>
-
-            <a 
-              href={`mailto:${personal.email}`} 
-              className="flex items-center gap-2 border border-border rounded-[6px] px-5 py-3 text-sm font-medium text-text bg-bg-elevated hover:bg-bg-warm transition-all duration-200 active:scale-98"
-            >
-              <Mail size={16} /> Mail
-            </a>
-
-            <a 
-              href={personal.monkeytype} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-2 border border-border rounded-[6px] px-5 py-3 text-sm font-medium text-text bg-bg-elevated hover:bg-bg-warm transition-all duration-200 active:scale-98 hidden sm:inline-flex"
-            >
-              <Keyboard size={16} /> Monkeytype
-            </a>
-
-            <a 
-              href={personal.instagram} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-2 border border-border rounded-[6px] px-5 py-3 text-sm font-medium text-text bg-bg-elevated hover:bg-bg-warm transition-all duration-200 active:scale-98 hidden sm:inline-flex"
-            >
-              <Instagram size={16} /> Instagram
+              <span>View works</span>
+              <ArrowDownRight size={15} weight="regular" />
             </a>
           </div>
 
-          {/* Keystroke Micro-UI Shortcut Bar */}
-          <div className="hero-anim inline-flex flex-wrap items-center gap-x-4 gap-y-2 border border-border bg-bg-warm rounded-[8px] px-4 py-2.5 text-xs text-text-muted font-mono-tech select-none">
-            <span className="font-semibold text-text uppercase tracking-wider text-[10px]">Shortcuts</span>
-            <div className="h-3 w-px bg-border hidden sm:block" />
-            <div className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 border border-border rounded bg-bg text-[10px] shadow-sm font-bold">T</kbd>
-              <span>Toggle Theme</span>
-            </div>
-            <div className="h-1 w-1 rounded-full bg-border" />
-            <div className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 border border-border rounded bg-bg text-[10px] shadow-sm font-bold">M</kbd>
-              <span>Open Menu</span>
-            </div>
-            <div className="h-1 w-1 rounded-full bg-border" />
-            <div className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 border border-border rounded bg-bg text-[10px] shadow-sm font-bold">G</kbd>
-              <span>GitHub</span>
-            </div>
-            <div className="h-1 w-1 rounded-full bg-border" />
-            <div className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 border border-border rounded bg-bg text-[10px] shadow-sm font-bold">L</kbd>
-              <span>LinkedIn</span>
-            </div>
+          {/* Quiet inline profile & off-screen icon links */}
+          <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border pt-6 text-sm text-text-muted">
+            {profileLinks.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-1.5 transition-colors duration-150 hover:text-text"
+              >
+                <span className="text-text-muted transition-colors duration-150 group-hover:text-text">
+                  {item.icon}
+                </span>
+                <span>{item.label}</span>
+                <ArrowUpRight
+                  size={12}
+                  weight="regular"
+                  className="opacity-60 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
+                />
+              </a>
+            ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
